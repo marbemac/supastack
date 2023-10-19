@@ -1,6 +1,6 @@
 import { createEffect, createRoot, createSignal, on } from 'solid-js';
 import type { Mock } from 'vitest';
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { createSearchQuery } from '../search-query.ts';
 

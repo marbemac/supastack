@@ -1,5 +1,5 @@
 {
-  "extends": "@supastack/tsconfig/tsconfig.node.json",
+  "extends": "@supastack/tsconfig/tsconfig.workerd.json",
   "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "rootDir": "."

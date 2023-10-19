@@ -1,10 +1,8 @@
-// @ts-expect-error missing typings
-export { Client } from '@neondatabase/serverless';
-
-// @ts-expect-error missing typings
 import { neonConfig } from '@neondatabase/serverless';
 // @ts-expect-error no typings
 import ws from 'ws';
+
+export { Client } from '@neondatabase/serverless';
 
 /**
  * Required to use neon/serverless in a node environment (for when we're debugging)

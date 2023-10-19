@@ -125,8 +125,6 @@ export class EdgeClickHouseClient implements ClickHouseClient {
       method: 'POST',
       body: bodyStream as ReadableStream,
       headers: this.#buildHeaders(format, { compressRequest: this.#shouldCompressRequests }),
-
-      // @ts-expect-error need this for the tests (which are run in node)
       duplex: 'half',
     });
 

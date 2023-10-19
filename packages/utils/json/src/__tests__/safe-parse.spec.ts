@@ -9,6 +9,5 @@ it('should work', () => {
   // should return undefined on error
   expect(safeParse('{')).toEqual(undefined);
 
-  // @ts-expect-error ignore
   expect(safeParse({ foo: true })).toEqual({ foo: true });
 });

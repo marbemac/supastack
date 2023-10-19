@@ -38,7 +38,7 @@ export function addSearchParams(
   if (clickhouse_settings !== undefined) {
     for (const [key, value] of Object.entries(clickhouse_settings)) {
       if (value !== undefined) {
-        params.set(key, formatQuerySettings(value));
+        params.set(key, formatQuerySettings(value as any));
       }
     }
   }

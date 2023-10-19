@@ -1,5 +1,5 @@
 {
-  "extends": "@supastack/tsconfig/tsconfig.base.json",
+  "extends": "@supastack/tsconfig/tsconfig.next.json",
   "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "rootDir": "."

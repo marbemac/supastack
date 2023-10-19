@@ -21,6 +21,7 @@
     "@supastack/utils-types": "workspace:*",
     "@types/moo": "^0.5.8",
     "@types/nearley": "^2.11.4",
+    "vite-plugin-solid": "^2.7.2",
     "vitest": "~0.34.6"
   }
 }
