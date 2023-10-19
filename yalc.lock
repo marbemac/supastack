@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "tailwind-variants": {
+      "signature": "8d17c6ad938735e8846e6382f6b01b69",
+      "file": true
+    }
+  }
+}

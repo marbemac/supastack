@@ -1,0 +1,20 @@
+{
+  "name": "@supastack/db-clickhouse-migrations",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./drivers/clickhouse": "./src/drivers/clickhouse.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@clickhouse/client": "0.2.4",
+    "@supastack/db-clickhouse-client": "workspace:*",
+    "@supastack/utils-urls": "workspace:*"
+  }
+}

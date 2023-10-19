@@ -1,0 +1,25 @@
+{
+  "name": "@supastack/eslint-config",
+  "version": "0.0.0",
+  "main": "src/index.cjs",
+  "module": "src/index.cjs",
+  "types": "src/index.cjs",
+  "sideEffects": false,
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.cjs",
+    "./base": "./src/base.cjs",
+    "./react": "./src/react.cjs"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-tailwindcss": "^3.13.0"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@supastack/org-model",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./ids": "./src/ids.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@supastack/db-model": "workspace:*",
+    "@supastack/db-pg-client": "workspace:*",
+    "@supastack/utils-ids": "workspace:*",
+    "drizzle-orm": "0.28.6",
+    "kysely": "0.26.3"
+  },
+  "devDependencies": {
+    "@supastack/utils-types": "workspace:*"
+  }
+}

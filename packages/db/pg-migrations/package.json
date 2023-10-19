@@ -1,0 +1,17 @@
+{
+  "name": "@supastack/db-pg-migrations",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@supastack/db-pg-client": "workspace:*",
+    "drizzle-kit": "0.19.13",
+    "kysely": "0.26.3",
+    "postgres": "~3.4.0"
+  }
+}

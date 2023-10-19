@@ -1,0 +1,27 @@
+{
+  "name": "@supastack/db-clickhouse-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc",
+    "test.ch": "vitest run",
+    "test.ch.watch": "vitest watch"
+  },
+  "exports": {
+    ".": {
+      "worker": "./src/edge/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@clickhouse/client": "0.2.4",
+    "@supastack/utils-ids": "workspace:*",
+    "@supastack/utils-streams": "workspace:*",
+    "@supastack/utils-urls": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "~0.34.6"
+  }
+}

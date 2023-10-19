@@ -1,0 +1,19 @@
+{
+  "name": "@supastack/db-model",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.28.6",
+    "kysely": "0.26.3"
+  },
+  "devDependencies": {
+    "@supastack/utils-types": "workspace:*"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@supastack/utils-search",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "test.watch": "vitest watch",
+    "build.grammar": "nearleyc src/grammar.ne -o src/grammar.ts && sed -i '' '1s;^;/* eslint-disable */\\n// @ts-nocheck\\n;' src/grammar.ts"
+  },
+  "dependencies": {
+    "moo": "^0.5.2",
+    "nearley": "^2.20.1",
+    "solid-js": "^1.8.3"
+  },
+  "devDependencies": {
+    "@supastack/utils-types": "workspace:*",
+    "@types/moo": "^0.5.8",
+    "@types/nearley": "^2.11.4",
+    "vitest": "~0.34.6"
+  }
+}

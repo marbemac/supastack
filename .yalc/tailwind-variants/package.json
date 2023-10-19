@@ -1,0 +1,71 @@
+{
+  "name": "tailwind-variants",
+  "version": "0.1.13",
+  "description": "🦄 Tailwindcss first-class variant API",
+  "author": "Junior Garcia <jrgarciadev@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nextui-org/tailwind-variants"
+  },
+  "bugs": {
+    "url": "https://github.com/nextui-org/tailwind-variants/issues"
+  },
+  "type": "module",
+  "main": "dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "transformer.js",
+    "transformer.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup && node copy-types.cjs",
+    "typecheck": "tsc --noEmit",
+    "prepack": "clean-package",
+    "benchmark": "node benchmark.js",
+    "postpack": "clean-package restore",
+    "lint": "eslint -c .eslintrc.json ./src/**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix -c .eslintrc.json ./src/**/*.{ts,tsx}",
+    "test": "jest --verbose"
+  },
+  "dependencies": {
+    "tailwind-merge": "^1.13.2"
+  },
+  "peerDependencies": {
+    "tailwindcss": "*"
+  },
+  "keywords": [
+    "tailwindcss",
+    "classes",
+    "responsive",
+    "variants",
+    "styled",
+    "styles"
+  ],
+  "tsup": {
+    "clean": true,
+    "minify": true,
+    "treeshake": true,
+    "entry": [
+      "src/*.js"
+    ],
+    "target": "es2019",
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  },
+  "packageManager": "pnpm@8.3.1",
+  "engines": {
+    "node": ">=16.x",
+    "pnpm": ">=7.x"
+  },
+  "yalcSig": "8d17c6ad938735e8846e6382f6b01b69"
+}

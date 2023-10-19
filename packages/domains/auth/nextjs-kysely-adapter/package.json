@@ -1,0 +1,16 @@
+{
+  "name": "@supastack/nextjs-kysely-adapter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@auth/core": "~0.15.0",
+    "@supastack/auth-model": "workspace:*",
+    "@supastack/user-model": "workspace:*"
+  }
+}

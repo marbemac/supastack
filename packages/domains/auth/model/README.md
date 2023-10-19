@@ -1,0 +1,1 @@
+# @supastack/auth-model
