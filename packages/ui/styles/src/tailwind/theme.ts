@@ -228,11 +228,11 @@ export const generateTheme = (options: GenerateThemeOptions = {}): Config['theme
       keyframes: {
         fadeIn: {
           from: { opacity: '0' },
-          to: { opacith: '1' },
+          to: { opacity: '1' },
         },
         fadeOut: {
           from: { opacity: '1' },
-          to: { opacith: '0' },
+          to: { opacity: '0' },
         },
 
         slideUpAndFadeIn: {
