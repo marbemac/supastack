@@ -1,4 +1,5 @@
 import type { BaseInsertQueryOpts, BaseSelectQueryOpts, BuildQueriesOpts } from '@supastack/db-model';
+import type { SetOptional } from '@supastack/utils-types';
 import type { Kysely } from 'kysely';
 
 import type { TUserId } from '../../ids.ts';
@@ -38,7 +39,7 @@ const userByEmail = ({ db }: SelectQueryOpts<UsersDb>) => {
 };
 
 const createUser = ({ db }: InsertQueryOpts<UsersDb>) => {
-  return (values: BaseNewUser) => {
+  return (values: SetOptional<BaseNewUser, 'id'>) => {
     return db
       .insertInto(USERS_KEY)
       .values({

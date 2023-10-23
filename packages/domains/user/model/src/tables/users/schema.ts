@@ -1,6 +1,5 @@
 import type { DrizzleToKysely } from '@supastack/db-model';
 import { idCol, timestampCol } from '@supastack/db-model';
-import type { SetOptional } from '@supastack/utils-types';
 import type { BuildColumns } from 'drizzle-orm';
 import { pgTable, text } from 'drizzle-orm/pg-core';
 
@@ -9,7 +8,7 @@ import type { TUserId } from '../../ids.ts';
 export const USERS_KEY = 'users' as const;
 export const USERS_TABLE = 'users' as const;
 
-export const baseUserColumns = {
+export const baseUserCols = {
   id: idCol<TUserId>()('id').primaryKey(),
 
   email: text('email').notNull().unique(),
@@ -22,14 +21,14 @@ export const baseUserColumns = {
   updatedAt: timestampCol('updated_at').defaultNow(),
 };
 
-export const baseUserConfig = (table: BuildColumns<typeof USERS_TABLE, typeof baseUserColumns, 'pg'>) => {
+export const baseUserConfig = (table: BuildColumns<typeof USERS_TABLE, typeof baseUserCols, 'pg'>) => {
   return {};
 };
 
-const baseUsers = pgTable(USERS_TABLE, baseUserColumns, baseUserConfig);
+const baseUsers = pgTable(USERS_TABLE, baseUserCols, baseUserConfig);
 
 export type BaseUsersTableCols = DrizzleToKysely<typeof baseUsers>;
-export type BaseNewUser = SetOptional<typeof baseUsers.$inferInsert, 'id'>;
+export type BaseNewUser = typeof baseUsers.$inferInsert;
 export type BaseUser = typeof baseUsers.$inferSelect;
 export type BaseUserColNames = NonNullable<keyof BaseUser>;
 
