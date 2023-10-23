@@ -13,7 +13,7 @@ import type {
 import { dropdownMenuStaticClass, dropdownMenuStyle } from '@supastack/ui-styles';
 import * as React from 'react';
 
-import { polyRef } from '../../index.ts';
+import { polyRef } from '../../utils/forward-ref.ts';
 import { Box } from '../Box/index.ts';
 import type { IconProps } from '../Icon/index.ts';
 import { Icon } from '../Icon/index.ts';

@@ -25,7 +25,7 @@ import type {
   Shadow,
   Theme,
   ThemeColorObj,
-  ThemeCookieVal,
+  ThemeConfig,
 } from './types.ts';
 import type { CustomTheme } from './types.ts';
 
@@ -55,7 +55,7 @@ export const generateTheme = (baseThemeId: PrebuiltThemeIds, customTheme: Custom
   };
 };
 
-export const generateThemesForCookie = (theme: ThemeCookieVal | null) => {
+export const generateThemesForCookie = (theme: ThemeConfig | null) => {
   let generatedTheme;
   try {
     generatedTheme = theme ? generateTheme(theme.baseThemeId, theme.customTheme) : generateTheme('default');

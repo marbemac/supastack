@@ -1,6 +1,6 @@
 'use client';
 
-import type { GeneratedTheme } from '@supastack/ui-theme';
+import type { GeneratedTheme, ThemeConfig } from '@supastack/ui-theme';
 import { createContext, useContext } from 'react';
 
 export const ThemeContext = createContext<GeneratedTheme | null>(null);
@@ -14,11 +14,11 @@ export const useTheme = () => {
   return theme;
 };
 
-export const GlobalThemeContext = createContext<GeneratedTheme | null>(null);
+export const GlobalThemeContext = createContext<ThemeConfig | null>(null);
 
 export const useGlobalTheme = () => {
   const theme = useContext(GlobalThemeContext);
-  if (!theme) {
+  if (typeof theme === 'undefined') {
     throw new Error('useGlobalTheme must be used within the context of a GlobalThemeContext.');
   }
 

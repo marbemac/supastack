@@ -6,7 +6,7 @@ import type { PrebuiltThemeIds } from './prebuilt-themes.ts';
 export type ColorMode = 'light' | 'dark';
 export type ConfigColorMode = ColorMode | 'system';
 
-export type ThemeCookieVal = { baseThemeId: PrebuiltThemeIds; customTheme?: CustomTheme };
+export type ThemeConfig = { baseThemeId: PrebuiltThemeIds; customTheme?: CustomTheme };
 
 export type Theme = {
   name: string;

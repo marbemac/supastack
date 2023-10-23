@@ -4,7 +4,7 @@ import type { TabMenuProps as BTabMenuProps, TabMenuTriggerProps as BTabMenuTrig
 import { splitPropsVariants, tabMenuStaticClass, tabMenuStyle } from '@supastack/ui-styles';
 import * as React from 'react';
 
-import { polyRef } from '../../index.ts';
+import { polyRef } from '../../utils/forward-ref.ts';
 import { TabMenuProvider, useTabMenu } from './context.tsx';
 
 type TabMenuElement = React.ElementRef<'div'>;

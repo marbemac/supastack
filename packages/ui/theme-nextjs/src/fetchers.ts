@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { generateThemesForCookie, type ThemeCookieVal } from '@supastack/ui-theme';
+import { generateThemesForCookie, type ThemeConfig } from '@supastack/ui-theme';
 import { hashJson } from '@supastack/utils-ids';
 import { unstable_cache } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -15,7 +15,7 @@ export const getGlobalTheme = cache(() => {
   }
 
   try {
-    return JSON.parse(stored.value) as ThemeCookieVal;
+    return JSON.parse(stored.value) as ThemeConfig;
   } catch (e) {
     console.warn('Error parsing theme cookie', stored.value, e);
   }
@@ -23,7 +23,7 @@ export const getGlobalTheme = cache(() => {
   return null;
 });
 
-export const getGeneratedTheme = (themeConfig: ThemeCookieVal | null) => {
+export const getGeneratedTheme = (themeConfig: ThemeConfig | null) => {
   const themeConfigHash = themeConfig ? hashJson(themeConfig) : 'system';
 
   return unstable_cache(async () => generateThemesForCookie(themeConfig), [`theme`, themeConfigHash], {
