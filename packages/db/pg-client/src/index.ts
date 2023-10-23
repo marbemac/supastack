@@ -1,2 +1,2 @@
-// node is the default
-export * from './node/index.ts';
+export { initClient } from './init-client.ts';
+export type { InitClientOpts } from './types.ts';
