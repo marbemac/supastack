@@ -33,12 +33,11 @@
     "typecheck": "nx run-many --target typecheck"
   },
   "resolutions": {
-    "@noble/hashes": "~1.2.0",
-    "tailwind-variants": "file:.yalc/tailwind-variants"
+    "@noble/hashes": "~1.2.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231016.0",
-    "@types/node": "^20.8.7",
+    "@types/node": "^20.8.8",
     "@types/react": "18.2.31",
     "@types/react-dom": "18.2.14",
     "happy-dom": "^12.9.1",
