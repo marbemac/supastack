@@ -1,3 +1,4 @@
+import type { TwProp } from '@supastack/ui-styles';
 import { formStaticClass } from '@supastack/ui-styles';
 import { createContext, forwardRef, useContext, useId } from 'react';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
@@ -57,14 +58,14 @@ type FormItemContextValue = {
 
 const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue);
 
-export const FormItem = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
+export const FormItem = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { tw?: TwProp }>(
+  ({ className, tw, ...props }, ref) => {
     const id = useId();
 
     const { slots, slotClasses } = useForm();
 
     const itemTw = slots.item({
-      class: [formStaticClass('item'), slotClasses?.item, className],
+      class: [formStaticClass('item'), tw, slotClasses?.item, className],
     });
 
     return (

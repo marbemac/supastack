@@ -9,9 +9,7 @@ export const USER_KEYS_TABLE = 'user_keys' as const;
 
 export const baseUserKeyCols = {
   id: text('id').primaryKey(),
-
   userId: idCol<TUserId>()('user_id').notNull(),
-
   hashedPassword: text('hashed_password'),
 };
 

@@ -12,6 +12,8 @@ export type PluginOptions = {
   prefix?: string;
 };
 
+const STATES = ['active', 'inactive'];
+
 export const plugin = basePlugin.withOptions(
   (options: PluginOptions = {}) => {
     const t = createCssVariableFactory(options.prefix || 'm');
@@ -27,14 +29,23 @@ export const plugin = basePlugin.withOptions(
         },
       });
 
-      addUtilities(typographyUtilities(t));
-
       /**
        * New variants
        */
 
       // https://larsmagnus.co/blog/focus-visible-within-the-missing-pseudo-class
       addVariant('focus-visible-within', '&:has(:focus-visible)');
+
+      for (const state of STATES) {
+        addVariant(`ui-${state}`, [`&[data-${state}]`]);
+        addVariant(`ui-not-${state}`, [`&:not([data-${state}])`]);
+      }
+
+      /**
+       * New utilities
+       */
+
+      addUtilities(typographyUtilities(t));
 
       addUtilities({
         /**

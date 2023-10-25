@@ -35,7 +35,7 @@ const userById = ({ db }: SelectQueryOpts<UsersDb>) => {
 
 const userByEmail = ({ db }: SelectQueryOpts<UsersDb>) => {
   return (params: { email: string }) =>
-    db.selectFrom(USERS_KEY).select(detailedSelect).where('email', '=', params.email).executeTakeFirst();
+    db.selectFrom(USERS_KEY).select(detailedSelect).where('email', '=', params.email.toLowerCase()).executeTakeFirst();
 };
 
 const createUser = ({ db }: InsertQueryOpts<UsersDb>) => {

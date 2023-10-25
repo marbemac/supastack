@@ -168,7 +168,9 @@ function zodToHtmlInputProps(
 
 export type FieldConfigItem = {
   description?: React.ReactNode;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement> & {
+    showLabel?: boolean;
+  };
   fieldType?: keyof typeof INPUT_COMPONENTS | React.FC<AutoFormInputComponentProps>;
 
   renderParent?: (props: { children: React.ReactNode }) => React.ReactElement | null;
@@ -199,10 +201,13 @@ function AutoFormInput({ label, isRequired, fieldConfigItem, fieldProps }: AutoF
     class: [formStaticClass('itemTop'), slotClasses?.itemTop],
   });
 
+  const { showLabel: _showLabel, ...fieldPropsWithoutShowLabel } = fieldProps;
+  const showLabel = _showLabel === undefined ? true : _showLabel;
+
   return (
     <FormItem>
       <Box tw={itemTopTw}>
-        {label && (
+        {showLabel && label && (
           <FormLabel>
             {label}
             {isRequired ? '*' : ''}
@@ -213,7 +218,7 @@ function AutoFormInput({ label, isRequired, fieldConfigItem, fieldProps }: AutoF
       </Box>
 
       <FormControl>
-        <Input type="text" {...fieldProps} />
+        <Input type="text" {...fieldPropsWithoutShowLabel} />
       </FormControl>
 
       {fieldConfigItem.description && <FormDescription>{fieldConfigItem.description}</FormDescription>}
@@ -459,7 +464,7 @@ function AutoFormObject<SchemaType extends z.ZodObject<any, any>>({
 
         const fieldConfigItem: FieldConfigItem = fieldConfig?.[name] ?? {};
         const zodInputProps = zodToHtmlInputProps(item);
-        const isRequired = zodInputProps.required ?? fieldConfigItem.inputProps?.required ?? false;
+        const isRequired = zodInputProps.required || fieldConfigItem.inputProps?.required || false;
 
         return (
           <FormField

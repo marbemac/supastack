@@ -19,6 +19,7 @@ type FormInputFieldProps<
   description?: string;
   inputProps?: InputProps;
   isRequired?: boolean;
+  hidden?: boolean;
 };
 
 export const FormInputField = <
@@ -29,6 +30,7 @@ export const FormInputField = <
   description,
   inputProps,
   isRequired,
+  hidden,
   ...others
 }: FormInputFieldProps<TFieldValues, TName>) => {
   const { slots, slotClasses } = useForm();
@@ -41,7 +43,7 @@ export const FormInputField = <
     <FormField
       {...others}
       render={({ field }) => (
-        <FormItem>
+        <FormItem tw={[hidden && 'hidden']}>
           <Box tw={itemTopTw}>
             {label && (
               <FormLabel>
@@ -53,7 +55,7 @@ export const FormInputField = <
           </Box>
 
           <FormControl>
-            <Input {...inputProps} {...field} />
+            <Input hidden={hidden} {...inputProps} {...field} />
           </FormControl>
 
           {description && <FormDescription>{description}</FormDescription>}

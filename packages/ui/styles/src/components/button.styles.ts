@@ -12,7 +12,7 @@ export const buttonStyle = tv(
     slots: {
       base: tx(
         'group',
-        'select-none appearance-none',
+        'select-none appearance-none font-medium',
         'inline-flex items-center justify-center',
         'max-w-full cursor-pointer whitespace-nowrap',
         'transform-gpu motion-safe:transition',

@@ -1,5 +1,5 @@
 import { createId, init } from '@paralleldrive/cuid2';
-import { custom, safeParse } from 'valibot';
+import { custom } from 'valibot';
 
 export type CUID2 = string;
 

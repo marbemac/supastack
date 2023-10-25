@@ -9,16 +9,9 @@ export const USER_SESSIONS_TABLE = 'user_sessions' as const;
 
 export const baseUserSessionCols = {
   id: text('id').primaryKey(),
-
   userId: idCol<TUserId>()('user_id').notNull(),
-
-  activeExpires: bigint('active_expires', {
-    mode: 'number',
-  }).notNull(),
-
-  idleExpires: bigint('idle_expires', {
-    mode: 'number',
-  }).notNull(),
+  activeExpires: bigint('active_expires', { mode: 'number' }).notNull(),
+  idleExpires: bigint('idle_expires', { mode: 'number' }).notNull(),
 };
 
 export const baseUserSessionConfig = (
