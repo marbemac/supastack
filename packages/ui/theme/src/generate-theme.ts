@@ -12,6 +12,8 @@ import type { AnyColor, ParsedRgba } from '@supastack/utils-colors';
 import { getAlphaColor, mix, readableColor } from '@supastack/utils-colors';
 import { getLuminance, mix as mix2, parseToRgba, rgba, toHex, transparentize } from 'color2k';
 import deepmerge from 'deepmerge';
+import mem from 'mem';
+import QuickLRU from 'quick-lru';
 
 import { INTENTS } from './consts.ts';
 import type { PrebuiltThemeIds } from './prebuilt-themes.ts';
@@ -31,7 +33,7 @@ import type { CustomTheme } from './types.ts';
 
 export type GeneratedTheme = ReturnType<typeof generateTheme>;
 
-export const generateTheme = (baseThemeId: PrebuiltThemeIds, customTheme: CustomTheme = { colors: {} }) => {
+const $generateTheme = (baseThemeId: PrebuiltThemeIds, customTheme: CustomTheme = { colors: {} }) => {
   const theme = deepmerge(PREBUILT_THEMES[baseThemeId], customTheme) as Theme;
   const fgColor = readableColor(theme.colors.background, { preferred: theme.colors.text, fallback: '#FFF' });
   const fgLuminance = getLuminance(fgColor);
@@ -54,6 +56,8 @@ export const generateTheme = (baseThemeId: PrebuiltThemeIds, customTheme: Custom
     },
   };
 };
+
+export const generateTheme = mem($generateTheme, { cacheKey: JSON.stringify, cache: new QuickLRU({ maxSize: 50 }) });
 
 export const generateThemesForCookie = (theme: ThemeConfig | null) => {
   let generatedTheme;
