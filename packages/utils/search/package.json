@@ -15,7 +15,7 @@
   "dependencies": {
     "moo": "^0.5.2",
     "nearley": "^2.20.1",
-    "solid-js": "^1.8.3"
+    "solid-js": "^1.8.4"
   },
   "devDependencies": {
     "@supastack/utils-types": "workspace:*",
