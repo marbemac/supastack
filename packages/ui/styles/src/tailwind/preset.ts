@@ -20,22 +20,22 @@ export const preset = (options: PresetOptions = {}): Config => {
       'animation', //	The animation utilities like animate-ping
       'appearance', //	The appearance utilities like appearance-none
       'aspectRatio', //	The aspect-ratio utilities like aspect-square
-      // 'backdropBlur', //	The backdrop-blur utilities like backdrop-blur-md
-      // 'backdropBrightness', //	The backdrop-brightness utilities like backdrop-brightness-100
-      // 'backdropContrast', //	The backdrop-contrast utilities like backdrop-contrast-100
-      // 'backdropFilter', //	The backdrop-filter utilities like backdrop-filter
+      'backdropBlur', //	The backdrop-blur utilities like backdrop-blur-md
+      'backdropBrightness', //	The backdrop-brightness utilities like backdrop-brightness-100
+      'backdropContrast', //	The backdrop-contrast utilities like backdrop-contrast-100
+      'backdropFilter', //	The backdrop-filter utilities like backdrop-filter
       // 'backdropGrayscale', //	The backdrop-grayscale utilities like backdrop-grayscale-0
       // 'backdropHueRotate', //	The backdrop-hue-rotate utilities like backdrop-hue-rotate-30
       // 'backdropInvert', //	The backdrop-invert utilities like backdrop-invert-0
-      // 'backdropOpacity', //	The backdrop-opacity utilities like backdrop-opacity-50
-      // 'backdropSaturate', //	The backdrop-saturate utilities like backdrop-saturate-100
+      'backdropOpacity', //	The backdrop-opacity utilities like backdrop-opacity-50
+      'backdropSaturate', //	The backdrop-saturate utilities like backdrop-saturate-100
       // 'backdropSepia', //	The backdrop-sepia utilities like backdrop-sepia-0
       // 'backgroundAttachment', //	The background-attachment utilities like bg-local
       // 'backgroundBlendMode', //	The background-blend-mode utilities like bg-blend-color-burn
       // 'backgroundClip', //	The background-clip utilities like bg-clip-padding
       'backgroundColor', //	The background-color utilities like bg-green-800
-      // 'backgroundImage', //	The background-image utilities like bg-gradient-to-br
-      // 'backgroundOpacity', //	The background-color opacity utilities like bg-opacity-25
+      'backgroundImage', //	The background-image utilities like bg-gradient-to-br
+      'backgroundOpacity', //	The background-color opacity utilities like bg-opacity-25
       // 'backgroundOrigin', //	The background-origin utilities like bg-origin-padding
       'backgroundPosition', //	The background-position utilities like bg-left-top
       'backgroundRepeat', //	The background-repeat utilities like bg-repeat-x
@@ -86,7 +86,7 @@ export const preset = (options: PresetOptions = {}): Config => {
       // 'fontVariantNumeric', //	The font-variant-numeric utilities like oldstyle-nums
       'fontWeight', //	The font-weight utilities like font-medium
       'gap', //	The gap utilities like gap-x-28
-      // 'gradientColorStops', //	The gradient-color-stops utilities like via-emerald-700
+      'gradientColorStops', //	The gradient-color-stops utilities like via-emerald-700
       // 'grayscale', //	The grayscale utilities like grayscale-0
       'gridAutoColumns', //	The grid-auto-columns utilities like auto-cols-min
       'gridAutoFlow', //	The grid-auto-flow utilities like grid-flow-dense
