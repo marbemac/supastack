@@ -12,6 +12,6 @@
     "@supastack/db-pg-client": "workspace:*",
     "drizzle-kit": "0.19.13",
     "kysely": "0.26.3",
-    "postgres": "~3.4.1"
+    "postgres": "~3.4.2"
   }
 }
