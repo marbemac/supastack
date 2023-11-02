@@ -13,7 +13,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@clickhouse/client": "0.2.4",
+    "@clickhouse/client": "0.2.5",
     "@supastack/db-clickhouse-client": "workspace:*",
     "@supastack/utils-urls": "workspace:*"
   }
