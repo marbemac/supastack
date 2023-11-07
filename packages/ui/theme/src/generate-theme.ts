@@ -143,12 +143,12 @@ const computeCssVariables = (theme: Theme, textColor: AnyColor, isDark: boolean)
     ...colorVariables,
     ...shadowVariables,
 
-    // TODO
+    // @TODO - don't hardcode Inter... check out fontaine
     '--font-ui':
       "Inter, Inter-fallback, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
-    '--font-headings': ``,
-    '--font-prose': ``,
-    '--font-mono': ``,
+    '--font-headings': `var(--font-ui)`,
+    '--font-prose': `var(--font-ui)`,
+    '--font-mono': `ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace`,
   };
 };
 
