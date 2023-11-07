@@ -157,7 +157,7 @@ export type GenerateThemeOptions = {
   prefix?: string;
 };
 
-export const generateTheme = (options: GenerateThemeOptions = {}): Config['theme'] => {
+export const generateTWThemeConfig = (options: GenerateThemeOptions = {}): Config['theme'] => {
   const t = createCssVariableFactory(options.prefix || 'm');
   const tp = createTokenProcessor(t);
 

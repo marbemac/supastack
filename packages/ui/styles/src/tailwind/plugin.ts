@@ -1,3 +1,6 @@
+import type { CustomTheme, PrebuiltThemeIds } from '@supastack/ui-theme';
+import { generateTheme } from '@supastack/ui-theme';
+import type { SetRequired } from '@supastack/utils-types';
 import basePlugin from 'tailwindcss/plugin';
 
 import { fontTokens } from '../tokens/fonts.ts';
@@ -6,10 +9,18 @@ import { radiusTokens } from '../tokens/radius.ts';
 import { spaceTokens } from '../tokens/space.ts';
 import { typographyTokens, typographyUtilities } from '../tokens/typography.ts';
 import { tx } from '../tw.ts';
-import { generateTheme } from './theme.ts';
+import { generateTWThemeConfig } from './theme.ts';
 
 export type PluginOptions = {
   prefix?: string;
+
+  theme?:
+    | false
+    | {
+        default: PrebuiltThemeIds | CustomTheme;
+        dark?: PrebuiltThemeIds | CustomTheme | false;
+        additional?: [PrebuiltThemeIds | SetRequired<CustomTheme, 'name'>];
+      };
 };
 
 const STATES = ['active', 'inactive'];
@@ -19,6 +30,8 @@ export const plugin = basePlugin.withOptions(
     const t = createCssVariableFactory(options.prefix || 'm');
     const tokenProcessor = createTokenProcessor(t);
 
+    const themes = computeThemeVars(options.theme);
+
     return ({ addBase, addUtilities, addVariant }) => {
       addBase({
         ':root': {
@@ -26,8 +39,29 @@ export const plugin = basePlugin.withOptions(
           ...tokenProcessor(radiusTokens).variables,
           ...tokenProcessor(typographyTokens).variables,
           ...tokenProcessor(fontTokens).variables,
+          ...(themes.defaultTheme ? cssPropsToJSInCss(themes.defaultTheme.css) : {}),
         },
       });
+
+      if (themes.darkTheme) {
+        addBase({
+          '@media (prefers-color-scheme: dark)': {
+            ':root': {
+              ...(themes.darkTheme ? cssPropsToJSInCss(themes.darkTheme.css) : {}),
+            },
+          },
+        });
+      }
+
+      if (themes.additional?.length) {
+        for (const theme of themes.additional) {
+          addBase({
+            [`[data-theme="${theme.theme.name}"]`]: {
+              ...cssPropsToJSInCss(theme.css),
+            },
+          });
+        }
+      }
 
       /**
        * New variants
@@ -143,7 +177,47 @@ export const plugin = basePlugin.withOptions(
   },
   options => {
     return {
-      theme: generateTheme(options),
+      theme: generateTWThemeConfig(options),
     };
   },
 );
+
+const computeThemeVars = (options: PluginOptions['theme']) => {
+  if (options === false) return {};
+
+  let defaultTheme;
+  const defaultId = options?.default || 'default';
+  if (defaultId) {
+    defaultTheme = typeof defaultId === 'string' ? generateTheme(defaultId) : generateTheme('default', defaultId);
+  }
+
+  let darkTheme;
+  const darkId = options?.dark === false ? false : options?.dark || 'default_dark';
+  if (darkId) {
+    darkTheme = typeof darkId === 'string' ? generateTheme(darkId) : generateTheme('default_dark', darkId);
+  }
+
+  const additional = [];
+  for (const theme of options?.additional || []) {
+    additional.push(typeof theme === 'string' ? generateTheme(theme) : generateTheme('default', theme));
+  }
+
+  return { defaultTheme, darkTheme, additional };
+};
+
+/**
+ * Most values should be strings, or tailwind will add a unit to them. E.g. turn `opacity: 0.5` into `opacity: 0.5px`
+ *
+ * https://tailwindcss.com/docs/plugins#css-in-js-syntax
+ */
+const cssPropsToJSInCss = (css: Record<string, unknown>) => {
+  const rules = Object.keys(css);
+  const result: Record<string, string> = {};
+
+  for (const rule of rules) {
+    const value = css[rule]!;
+    result[rule] = typeof value === 'string' ? value : String(value);
+  }
+
+  return result;
+};
