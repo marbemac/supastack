@@ -2,22 +2,43 @@
 const config = {
   root: true,
 
-  extends: [
-    '@supastack/eslint-config/base',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
-  ],
+  extends: ['@supastack/eslint-config/base'],
 
-  rules: {
-    'react/prop-types': 'off',
-    'react/no-unknown-property': [
-      2,
-      {
-        ignore: ['jsx', 'global'],
+  overrides: [
+    {
+      files: ['**/*.{js,jsx,ts,tsx}'],
+      plugins: ['react', 'jsx-a11y'],
+
+      extends: [
+        'plugin:react/recommended',
+        'plugin:react/jsx-runtime',
+        'plugin:react-hooks/recommended',
+        'plugin:jsx-a11y/recommended',
+        'prettier',
+      ],
+
+      settings: {
+        react: {
+          version: 'detect',
+        },
+        formComponents: ['Form'],
+        linkComponents: [
+          { name: 'Link', linkAttribute: 'to' },
+          { name: 'NavLink', linkAttribute: 'to' },
+        ],
       },
-    ],
-  },
+
+      rules: {
+        'react/prop-types': 'off',
+        'react/no-unknown-property': [
+          2,
+          {
+            ignore: ['jsx', 'global'],
+          },
+        ],
+      },
+    },
+  ],
 };
 
 module.exports = config;
