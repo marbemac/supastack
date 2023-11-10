@@ -18,7 +18,7 @@ export const prosePlugin = basePlugin.withOptions((options: ProsePluginOpts = {}
       '.ui-prose': {
         [`@apply ${tx('text-fg/90')}`]: {},
         fontSize: rem(16),
-        lineHeight: round(28 / 16),
+        lineHeight: round(24 / 16),
 
         '> :first-child': {
           marginTop: '0',
@@ -168,7 +168,7 @@ export const prosePlugin = basePlugin.withOptions((options: ProsePluginOpts = {}
           [`@apply ${tx('font-bold text-fg')}`]: {},
           fontSize: em(36, 16),
           marginTop: '0',
-          marginBottom: em(32, 36),
+          marginBottom: em(36, 36),
           lineHeight: round(40 / 36),
         },
         'h1 strong': {
@@ -177,7 +177,7 @@ export const prosePlugin = basePlugin.withOptions((options: ProsePluginOpts = {}
         h2: {
           [`@apply ${tx('font-bold text-fg')}`]: {},
           fontSize: em(24, 16),
-          marginTop: em(48, 24),
+          marginTop: em(42, 24),
           marginBottom: em(24, 24),
           lineHeight: round(32 / 24),
         },
@@ -187,7 +187,7 @@ export const prosePlugin = basePlugin.withOptions((options: ProsePluginOpts = {}
         h3: {
           [`@apply ${tx('font-semibold text-fg')}`]: {},
           fontSize: em(20, 16),
-          marginTop: em(32, 20),
+          marginTop: em(36, 20),
           marginBottom: em(12, 20),
           lineHeight: round(32 / 20),
         },
@@ -196,7 +196,7 @@ export const prosePlugin = basePlugin.withOptions((options: ProsePluginOpts = {}
         },
         h4: {
           [`@apply ${tx('font-semibold text-fg')}`]: {},
-          marginTop: em(24, 16),
+          marginTop: em(28, 16),
           marginBottom: em(8, 16),
           lineHeight: round(24 / 16),
         },
