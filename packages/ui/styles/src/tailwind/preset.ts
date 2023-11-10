@@ -1,13 +1,14 @@
 import type { Config } from 'tailwindcss';
 
 import { plugin, type PluginOptions } from './plugin.ts';
+import { prosePlugin } from './prose.ts';
 
 type PresetOptions = PluginOptions;
 
 export const preset = (options: PresetOptions = {}): Config => {
   return {
     content: [],
-    plugins: [plugin(options)],
+    plugins: [plugin(options), prosePlugin({})],
 
     // to help intellisense and eslint performance, safelist the core plugins we actually use
     // if need utilities from a commented out plugin np.. just uncomment it

@@ -27,7 +27,7 @@ const STATES = ['active', 'inactive'];
 
 export const plugin = basePlugin.withOptions(
   (options: PluginOptions = {}) => {
-    const t = createCssVariableFactory(options.prefix || 'm');
+    const t = createCssVariableFactory(options.prefix ?? 'm');
     const tokenProcessor = createTokenProcessor(t);
 
     const themes = computeThemeVars(options.theme);
@@ -186,19 +186,19 @@ const computeThemeVars = (options: PluginOptions['theme']) => {
   if (options === false) return {};
 
   let defaultTheme;
-  const defaultId = options?.default || 'default';
+  const defaultId = options?.default ?? 'default';
   if (defaultId) {
     defaultTheme = typeof defaultId === 'string' ? generateTheme(defaultId) : generateTheme('default', defaultId);
   }
 
   let darkTheme;
-  const darkId = options?.dark === false ? false : options?.dark || 'default_dark';
+  const darkId = options?.dark === false ? false : options?.dark ?? 'default_dark';
   if (darkId) {
     darkTheme = typeof darkId === 'string' ? generateTheme(darkId) : generateTheme('default_dark', darkId);
   }
 
   const additional = [];
-  for (const theme of options?.additional || []) {
+  for (const theme of options?.additional ?? []) {
     additional.push(typeof theme === 'string' ? generateTheme(theme) : generateTheme('default', theme));
   }
 

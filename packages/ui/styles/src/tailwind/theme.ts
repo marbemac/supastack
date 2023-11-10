@@ -56,6 +56,7 @@ const commonColors = (group?: ColorGroup) => {
   }
 
   const colors = {
+    inherit: 'inherit',
     current: 'currentColor',
     transparent: 'transparent',
     white: '#FFF',
@@ -79,10 +80,17 @@ const textColors = () => {
   }
 
   return {
+    inherit: 'inherit',
+    current: 'currentColor',
+    transparent: 'transparent',
+    white: '#FFF',
+    black: '#000',
+
     fg: colorWithOpacity<FgColor>('fg-default', 'text'),
     muted: colorWithOpacity<FgColor>('fg-muted', 'text'),
     soft: colorWithOpacity<FgColor>('fg-soft', 'text'),
     'on-emphasis': colorWithOpacity<FgColor>('fg-on-emphasis', 'text'),
+    link: colorWithOpacity<IntentColor>('primary-fg', 'text'),
 
     ...intentColors,
   };
@@ -130,6 +138,7 @@ const boxShadow = {
 };
 
 const fontFamily = {
+  inherit: 'inherit',
   ui: 'var(--font-ui)',
   prose: 'var(--font-prose)',
   mono: 'var(--font-mono)',
@@ -158,7 +167,7 @@ export type GenerateThemeOptions = {
 };
 
 export const generateTWThemeConfig = (options: GenerateThemeOptions = {}): Config['theme'] => {
-  const t = createCssVariableFactory(options.prefix || 'm');
+  const t = createCssVariableFactory(options.prefix ?? 'm');
   const tp = createTokenProcessor(t);
 
   const radius = tp(radiusTokens);
@@ -320,7 +329,9 @@ const fontWeight = (t: TokenCssVars<FontToken>) => ({
   light: `var(${t['font-weight-light']})`,
   normal: `var(${t['font-weight-regular']})`,
   medium: `var(${t['font-weight-medium']})`,
+  semibold: `var(${t['font-weight-semibold']})`,
   bold: `var(${t['font-weight-bold']})`,
+  extrabold: `var(${t['font-weight-extrabold']})`,
 });
 
 const borderRadius = (t: TokenCssVars<RadiusToken>) => ({
