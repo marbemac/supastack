@@ -17,7 +17,11 @@ export const prosePlugin = basePlugin.withOptions((options: ProsePluginOpts = {}
     addComponents({
       '.ui-prose': {
         [`@apply ${tx('text-fg/90')}`]: {},
-        fontSize: rem(16),
+
+        // prose related variables
+        '--prose-font-size': rem(16),
+
+        fontSize: 'var(--prose-font-size)',
         lineHeight: round(24 / 16),
 
         '> :first-child': {
@@ -355,6 +359,10 @@ export const prosePlugin = basePlugin.withOptions((options: ProsePluginOpts = {}
           lineHeight: round(20 / 14),
           marginTop: em(12, 14),
         },
+      },
+
+      '.ui-prose-sm': {
+        '--prose-font-size': rem(14),
       },
     });
   };

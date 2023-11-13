@@ -14,7 +14,7 @@ export const cardStyle = tv(
   {
     slots: {
       base: tx('relative reset-a reset-button'),
-      inner: tx('bg-panel-a overflow-hidden rounded-inherit'),
+      inner: tx('overflow-hidden rounded-inherit bg-panel-a'),
     },
 
     defaultVariants: {
