@@ -1,5 +1,7 @@
+import '@fortawesome/fontawesome-svg-core/styles.css';
+
 import type { IconDefinition, IconLookup, IconName, IconPrefix } from '@fortawesome/fontawesome-common-types';
-import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { config, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import type { IconProps as BIconProps } from '@supastack/ui-styles';
 import { iconStaticClass, iconStyle, splitPropsVariants } from '@supastack/ui-styles';
 import { useMemo } from 'react';
@@ -7,6 +9,8 @@ import { useMemo } from 'react';
 import { Box } from '../Box/index.ts';
 import { initLibrary } from './standard-library.ts';
 import { FaSvg } from './svg-icon.tsx';
+
+config.autoAddCss = false;
 
 export type IconProps = BIconProps<React.ReactElement>;
 
