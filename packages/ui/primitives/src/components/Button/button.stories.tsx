@@ -4,6 +4,7 @@ import { Box } from '../Box/index.ts';
 import { HStack, VStack } from '../Stack/index.ts';
 import type { ButtonProps } from './button.tsx';
 import { Button } from './button.tsx';
+import { ButtonGroup } from './button-group.tsx';
 
 const meta = {
   title: 'Components / Button',
@@ -175,4 +176,30 @@ export const Loading = (props: ButtonProps) => {
       </HStack>
     </VStack>
   );
+};
+
+export const ButtonGroups: Story = {
+  args: {
+    isDisabled: false,
+  },
+  render: args => (
+    <VStack spacing={6}>
+      <ButtonGroup intent="primary" {...args}>
+        <Button>Save</Button>
+        <Button>Publish</Button>
+        <Button intent="danger">Cancel</Button>
+      </ButtonGroup>
+
+      <ButtonGroup {...args}>
+        <Button startIcon="pencil" />
+        <Button startIcon="cog" />
+        <Button startIcon="star" />
+      </ButtonGroup>
+
+      <ButtonGroup variant="outline" isAttached {...args}>
+        <Button>Create Commit</Button>
+        <Button startIcon="caret-down" />
+      </ButtonGroup>
+    </VStack>
+  ),
 };

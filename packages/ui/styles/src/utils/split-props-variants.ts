@@ -8,6 +8,7 @@
 export const splitPropsVariants = <T extends {}, K extends keyof T>(
   props: T,
   variantKeys?: K[],
+  defaultValues?: Partial<Pick<T, K>>,
   removeVariantProps = true,
 ): readonly [Omit<T, K>, Pick<T, K>] => {
   if (!variantKeys) {
@@ -16,7 +17,7 @@ export const splitPropsVariants = <T extends {}, K extends keyof T>(
   }
 
   const picked = variantKeys.reduce((acc, key) => {
-    return { ...acc, [key]: props[key] };
+    return { ...acc, [key]: props[key] ?? defaultValues?.[key] };
   }, {});
 
   if (removeVariantProps) {

@@ -36,13 +36,9 @@ export function splitProps<T>(props: T, ...keys: [(keyof T)[]]) {
   const descriptors = Object.getOwnPropertyDescriptors(props);
   const split = (k: (keyof T)[]) => {
     const clone: Partial<T> = {};
-    for (let i = 0; i < k.length; i++) {
-      const key = k[i];
-      // @ts-expect-error ignore
+    for (const key of k) {
       if (descriptors[key]) {
-        // @ts-expect-error ignore
         Object.defineProperty(clone, key, descriptors[key]);
-        // @ts-expect-error ignore
         delete descriptors[key];
       }
     }

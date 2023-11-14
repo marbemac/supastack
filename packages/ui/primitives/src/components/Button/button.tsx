@@ -6,6 +6,7 @@ import { polyRef } from '../../utils/forward-ref.ts';
 import { Box } from '../Box/index.ts';
 import type { IconProps } from '../Icon/index.ts';
 import { Icon } from '../Icon/index.ts';
+import { useButtonGroupContext } from './button-group-context.ts';
 
 export type ButtonProps = BButtonProps<React.ReactElement> & {
   children?: React.ReactNode;
@@ -14,7 +15,14 @@ export type ButtonProps = BButtonProps<React.ReactElement> & {
 const DEFAULT_SPINNER: IconProps['icon'] = 'spinner';
 
 export const Button = polyRef<'button', ButtonProps>((props, ref) => {
-  const [local, variantProps] = splitPropsVariants(props, buttonStyle.variantKeys);
+  const groupContext = useButtonGroupContext();
+
+  const [local, variantProps] = splitPropsVariants(props, buttonStyle.variantKeys, {
+    isDisabled: groupContext?.isDisabled,
+    size: groupContext?.size,
+    variant: groupContext?.variant,
+    intent: groupContext?.intent,
+  });
 
   const {
     as: As = 'button',

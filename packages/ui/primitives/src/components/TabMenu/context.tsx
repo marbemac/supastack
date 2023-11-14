@@ -1,20 +1,13 @@
 import type { TabMenuProps, tabMenuStyle } from '@supastack/ui-styles';
-import { createContext, useContext } from 'react';
+
+import { createContext } from '../../utils/create-context.ts';
 
 type TabMenuContextValue = {
   slots: ReturnType<typeof tabMenuStyle>;
   slotClasses?: TabMenuProps['slotClasses'];
 };
 
-const TabMenuContext = createContext<TabMenuContextValue | null>(null);
-
-export const TabMenuProvider = TabMenuContext.Provider;
-
-export const useTabMenu = () => {
-  const ctx = useContext(TabMenuContext);
-  if (!ctx) {
-    throw new Error('useTabMenu must be used within a `TabMenuProvider`');
-  }
-
-  return ctx;
-};
+export const [TabMenuProvider, useTabMenu] = createContext<TabMenuContextValue>({
+  name: 'TabMenuContext',
+  strict: true,
+});

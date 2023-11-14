@@ -64,9 +64,6 @@ export const buttonStyle = tv(
         true: {},
         false: tx('pointer-events-none select-none'),
       },
-      isInGroup: {
-        true: tx('[&:not(:first-child):not(:last-child)]:rounded-none'),
-      },
       isIconOnly: {
         true: tx('gap-0 p-0'),
         false: tx('[&>svg]:max-w-[2em]'),
@@ -232,21 +229,40 @@ export type ButtonSlots = VariantSlots<typeof buttonStyle.slots>;
 
 export const buttonStaticClass = makeStaticClass<ButtonSlots>('button');
 
-// export const buttonGroupStyle = tv(
-//   {
-//     base: 'inline-flex items-center justify-center h-auto',
-//     variants: {
-//       fullWidth: {
-//         true: 'w-full',
-//       },
-//     },
-//     defaultVariants: {
-//       fullWidth: false,
-//     },
-//   },
-//   {
-//     twMergeConfig,
-//   },
-// );
+/**
+ * ButtonGroup
+ */
 
-// export type ButtonGroupStyleProps = VariantProps<typeof buttonGroupStyle>;
+export const buttonGroupStyle = tv(
+  {
+    slots: {
+      base: tx(''),
+    },
+    variants: {
+      fullWidth: {
+        true: tx('w-full'),
+      },
+      isAttached: {
+        true: tx(
+          // ... These are ugly - COULD move them to dedicated classes in the tailwind plugin... but not a huge deal.
+          '[&>_*:first-of-type:not(:last-of-type)]:rounded-e-none',
+          '[&>_*:not(:first-of-type):not(:last-of-type)]:rounded-none',
+          '[&>_*:not(:first-of-type):last-of-type]:rounded-s-none',
+          '[&>_*:not(:last-of-type)]:-me-px',
+        ),
+      },
+    },
+    defaultVariants: {
+      fullWidth: false,
+      isAttached: false,
+    },
+  },
+  {
+    twMergeConfig,
+  },
+);
+
+export type ButtonGroupStyleProps = VariantProps<typeof buttonGroupStyle>;
+export type ButtonGroupSlots = VariantSlots<typeof buttonGroupStyle.slots>;
+
+export const buttonGroupStaticClass = makeStaticClass<ButtonGroupSlots>('button-group');
