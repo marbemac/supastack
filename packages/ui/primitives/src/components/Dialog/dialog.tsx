@@ -99,7 +99,7 @@ const DialogTitle = React.forwardRef<DialogTitleElement, DialogTitleProps>((prop
 
   return (
     <BaseDialog.Title asChild>
-      <Heading size={5} trim="start" {...rest} className={titleTw} ref={ref} />
+      <Heading size={6} trim="start" {...rest} className={titleTw} ref={ref} />
     </BaseDialog.Title>
   );
 });

@@ -9,13 +9,19 @@ const config: StorybookConfig = {
     '@storybook/addon-a11y',
     'storybook-addon-performance',
   ],
+  core: {
+    builder: '@storybook/builder-vite',
+  },
   framework: {
     name: '@storybook/react-vite',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
+  typescript: {
+    reactDocgen: 'react-docgen',
   },
+  // docs: {
+  //   autodocs: 'tag',
+  // },
 };
 
 export default config;

@@ -19,7 +19,7 @@
     "@supastack/user-model": "workspace:*",
     "@supastack/utils-dates": "workspace:*",
     "@supastack/utils-ids": "workspace:*",
-    "drizzle-orm": "0.28.6",
+    "drizzle-orm": "0.29.0",
     "kysely": "0.26.3"
   },
   "devDependencies": {

@@ -24,5 +24,6 @@ export * from './components/Input/index.ts';
 export * from './components/Stack/index.ts';
 export * from './components/TabMenu/index.ts';
 export * from './components/Text/index.ts';
+export * from './hooks/use-clipboard.ts';
 export type { PolymorphicComponent } from './utils/forward-ref.ts';
 export { forwardRef, polyRef } from './utils/forward-ref.ts';

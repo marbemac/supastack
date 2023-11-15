@@ -64,6 +64,7 @@ const config = {
         'prettier',
       ],
       rules: {
+        '@typescript-eslint/switch-exhaustiveness-check': 'error',
         '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
         '@typescript-eslint/no-floating-promises': 'error',
         '@typescript-eslint/consistent-type-imports': 'error',
