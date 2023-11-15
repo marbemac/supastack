@@ -23,7 +23,7 @@ const withTheme: Decorator = (Story, context) => {
     >
       <Box
         data-theme="dark"
-        tw="absolute inset-0 overflow-auto flex items-center justify-center font-ui antialiased p-10"
+        tw="absolute inset-0 overflow-auto flex items-center justify-center font-ui antialiased p-10 text-base"
       >
         <Story />
       </Box>

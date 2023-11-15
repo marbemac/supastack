@@ -36,9 +36,9 @@ export const baseMenuStyle = tv(
       checkboxItem: baseItem,
       radioItem: baseItem,
 
-      itemIndicator: tx('flex w-6 items-center pl-1'),
+      itemIndicator: tx('flex w-6 items-center'),
       itemContent: tx('pr-6'),
-      itemIcon: tx('flex w-7 items-center leading-none'),
+      itemIcon: tx('flex w-6 items-center text-[0.9em] leading-none'),
 
       subtrigger: baseItem,
       subtriggerIcon: tx('ml-auto text-sm opacity-75'),
@@ -47,6 +47,7 @@ export const baseMenuStyle = tv(
       separator: tx('mx-1.5 my-2 h-px bg-neutral-line-1'),
       shortcut: tx('ml-auto text-xs tracking-widest opacity-60'),
     },
+
     variants: {
       inset: {
         true: {

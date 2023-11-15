@@ -53,14 +53,14 @@ export const Button = polyRef<'button', ButtonProps>((props, ref) => {
   const startIconElem = !variantProps.isLoading
     ? startIcon
     : loadingText && loadingPlacement === 'end'
-    ? null
-    : DEFAULT_SPINNER;
+      ? null
+      : DEFAULT_SPINNER;
 
   const endIconElem = !variantProps.isLoading
     ? endIcon
     : loadingText && loadingPlacement === 'end'
-    ? DEFAULT_SPINNER
-    : null;
+      ? DEFAULT_SPINNER
+      : null;
 
   const contentElem = !variantProps.isLoading ? children : loadingText;
   const hasContent = contentElem !== undefined && contentElem !== null;
@@ -69,18 +69,12 @@ export const Button = polyRef<'button', ButtonProps>((props, ref) => {
   return (
     <As {...others} ref={ref} className={baseTw} disabled={variantProps.isDisabled}>
       {startIconElem && (!isIconButton || !endIconElem) ? (
-        <Icon tw={iconTw} UNSAFE_class={buttonStaticClass('icon')} icon={startIconElem} spin={variantProps.isLoading} />
+        <Icon tw={iconTw} icon={startIconElem} spin={variantProps.isLoading} />
       ) : null}
 
-      {hasContent ? (
-        <Box tw={textTw} UNSAFE_class={buttonStaticClass('text')}>
-          {contentElem}
-        </Box>
-      ) : null}
+      {hasContent ? <Box tw={textTw}>{contentElem}</Box> : null}
 
-      {endIconElem ? (
-        <Icon tw={iconTw} UNSAFE_class={buttonStaticClass('icon')} icon={endIconElem} spin={variantProps.isLoading} />
-      ) : null}
+      {endIconElem ? <Icon tw={iconTw} icon={endIconElem} spin={variantProps.isLoading} /> : null}
     </As>
   );
 });

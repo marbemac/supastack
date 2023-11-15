@@ -47,7 +47,10 @@ export const buttonStyle = tv(
         danger: {},
       },
       size: {
-        sm: formSizes.sm,
+        sm: {
+          base: formSizes.sm,
+          icon: tx('text-[0.9em]'),
+        },
         md: formSizes.md,
         lg: formSizes.lg,
       },

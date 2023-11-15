@@ -7,21 +7,39 @@ import * as React from 'react';
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & ScrollAreaProps
->(({ className, children, tw, slotClasses, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> &
+    ScrollAreaProps & {
+      // set to true if caller is handling rendering ScrollViewport (see Select for example use case)
+      skipViewport?: boolean;
+    }
+>(({ className, children, tw, skipViewport, ...props }, ref) => {
   const slots = React.useMemo(() => scrollAreaStyle(), []);
   const baseTw = slots.base({ class: [scrollAreaStaticClass('base'), tw, className] });
-  const viewportTw = slots.viewport({ class: [scrollAreaStaticClass('viewport'), slotClasses?.viewport] });
 
   return (
     <ScrollAreaPrimitive.Root ref={ref} className={baseTw} {...props}>
-      <ScrollAreaPrimitive.Viewport className={viewportTw}>{children}</ScrollAreaPrimitive.Viewport>
+      {skipViewport ? children : <ScrollViewport>{children}</ScrollViewport>}
       <ScrollBar />
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
   );
 });
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
+
+const ScrollViewport = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaPrimitive.Viewport>,
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Viewport>
+>(({ className, children, ...props }, ref) => {
+  const slots = React.useMemo(() => scrollAreaStyle(), []);
+  const viewportTw = slots.viewport({ class: [scrollAreaStaticClass('viewport'), className] });
+
+  return (
+    <ScrollAreaPrimitive.Viewport className={viewportTw} ref={ref} {...props}>
+      {children}
+    </ScrollAreaPrimitive.Viewport>
+  );
+});
+ScrollViewport.displayName = ScrollAreaPrimitive.Viewport.displayName;
 
 const ScrollBar = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
@@ -39,4 +57,4 @@ const ScrollBar = React.forwardRef<
 });
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
 
-export { ScrollArea, ScrollBar };
+export { ScrollArea, ScrollBar, ScrollViewport };
