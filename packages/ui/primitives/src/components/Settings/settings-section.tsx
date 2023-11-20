@@ -1,7 +1,9 @@
+import type { StyleProps } from '@supastack/ui-styles';
+
 import { Heading } from '../Heading/heading.tsx';
 import { VStack } from '../Stack/stack.tsx';
 
-export type SettingsSectionProps = {
+export type SettingsSectionProps = StyleProps & {
   title: string;
 
   isDangerZone?: boolean;
@@ -10,9 +12,9 @@ export type SettingsSectionProps = {
   children: React.ReactNode;
 };
 
-export const SettingsSection = ({ title, isDangerZone, children }: SettingsSectionProps) => {
+export const SettingsSection = ({ title, isDangerZone, children, ...rest }: SettingsSectionProps) => {
   return (
-    <VStack spacing={3}>
+    <VStack spacing={3} {...rest}>
       <Heading size={5} as="h2" tw={isDangerZone ? 'text-danger' : undefined}>
         {title}
       </Heading>

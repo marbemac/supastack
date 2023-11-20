@@ -6,9 +6,7 @@ import type { Decorator, Preview } from '@storybook/react';
 import { withPerformance } from 'storybook-addon-performance';
 import { generateTheme } from '@supastack/ui-theme';
 
-// @ts-expect-error bah
 import { Box } from '../src/index.ts';
-// @ts-expect-error bah
 import { ThemedGlobalInner } from '../src/components/Themed/index.ts';
 
 const withTheme: Decorator = (Story, context) => {

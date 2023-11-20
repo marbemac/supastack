@@ -14,6 +14,7 @@
     "./label": "./src/components/Label/index.ts",
     "./scroll-area": "./src/components/ScrollArea/index.ts",
     "./select": "./src/components/Select/index.ts",
+    "./settings": "./src/components/Settings/index.ts",
     "./tabs": "./src/components/Tabs/index.ts",
     "./themed": "./src/components/Themed/index.ts",
     "./time-ago": "./src/components/TimeAgo/index.ts",

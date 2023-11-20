@@ -1,45 +1,50 @@
+import { useCallback, useState } from 'react';
+
 import { useClipboard } from '../../hooks/use-clipboard.ts';
 import { Box } from '../Box/index.ts';
 import { Button } from '../Button/index.ts';
+import { Dialog, DialogContent, DialogTitle } from '../Dialog/index.ts';
+import { Heading } from '../Heading/index.ts';
 import { Icon, type IconProps } from '../Icon/index.ts';
+import type { SelectRootProps } from '../Select/index.ts';
+import { SelectRoot, SelectTrigger } from '../Select/index.ts';
 import { HStack, VStack } from '../Stack/index.ts';
-
-type SettingsRowIcon = {
-  icon: IconProps['icon'];
-};
+import { Text } from '../Text/index.ts';
 
 type CommonSettingsRowProps = {
   label: string;
   hint?: string | React.ReactNode;
-  icon?: SettingsRowIcon;
+  icon?: IconProps['icon'];
   isDisabled?: boolean;
 };
 
 type SwitchSettingsRowProps = CommonSettingsRowProps & {
   type: 'switch';
-  onClick: (isSelected: boolean) => unknown;
+  onPress: (isSelected: boolean) => unknown;
   isSelected: boolean;
   switchLabel: string;
 };
 
 type DialogSettingsRowProps = CommonSettingsRowProps & {
   type: 'dialog';
-  onClick: () => unknown;
+  // The contents to put in the Dialog
+  children: React.ReactNode;
   value?: string | React.ReactNode;
 };
 
 type ListSettingsRowProps = CommonSettingsRowProps & {
   type: 'list';
-  onClick: () => unknown;
+  onPress?: () => unknown;
   noAction?: boolean;
   actionText?: string;
   items: SettingsRowChildItemProps[];
   isLoadingItems?: boolean;
 };
 
-type ExternalLinkSettingsRowProps = CommonSettingsRowProps & {
-  type: 'external-link';
-  onClick: () => unknown;
+type ActionSettingsRowProps = CommonSettingsRowProps & {
+  type: 'action';
+  onPress: () => unknown;
+  hasMoreIcon?: IconProps['icon'];
   value?: string;
 };
 
@@ -52,10 +57,12 @@ export type SettingsRowProps =
   | SwitchSettingsRowProps
   | DialogSettingsRowProps
   | ListSettingsRowProps
-  | ExternalLinkSettingsRowProps
+  | ActionSettingsRowProps
   | CopySettingsRowProps;
 
 export const SettingsRow = (props: SettingsRowProps) => {
+  const [open, onOpenChange] = useState(false);
+
   switch (props.type) {
     case 'switch':
       return <div>@TODO</div>;
@@ -72,9 +79,26 @@ export const SettingsRow = (props: SettingsRowProps) => {
     // );
 
     case 'dialog':
-      return <_SettingsRow {...props} hasMoreIcon="chevron-right" valueElem={<Box>{props.value}</Box>} />;
+      return (
+        <_SettingsRow
+          {...props}
+          hasMoreIcon={['far', 'chevron-right']}
+          valueElem={<Box>{props.value}</Box>}
+          onPress={() => onOpenChange(true)}
+        >
+          <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent tw="w-full">
+              <VStack divider spacing={5}>
+                <DialogTitle>{props.label}</DialogTitle>
 
-    case 'external-link':
+                {props.children}
+              </VStack>
+            </DialogContent>
+          </Dialog>
+        </_SettingsRow>
+      );
+
+    case 'action':
       return <_SettingsRow {...props} />;
 
     case 'copy':
@@ -84,10 +108,10 @@ export const SettingsRow = (props: SettingsRowProps) => {
       return (
         <_SettingsRow
           {...props}
-          onClick={props.noAction ? undefined : props.onClick}
+          onPress={props.noAction ? undefined : props.onPress}
           actionElem={
             !props.noAction ? (
-              <Button size="sm" isDisabled={props.isDisabled} onClick={props.onClick}>
+              <Button size="sm" isDisabled={props.isDisabled} onClick={props.onPress}>
                 {props.actionText ?? 'Add'}
               </Button>
             ) : undefined
@@ -95,7 +119,7 @@ export const SettingsRow = (props: SettingsRowProps) => {
         >
           {props.items?.length ? (
             <Box tw="pl-14">
-              <Box tw="h-px bg-neutral-soft-1-a" />
+              <Box tw="h-px border-neutral-line-1/60" />
               <VStack divider>
                 {props.items.map((i, k) => (
                   <SettingsRowChildItem key={k} {...i} />
@@ -113,7 +137,7 @@ type InternalSettingsRowProps = Omit<SettingsRowProps, 'type' | 'onClick'> & {
   valueElem?: React.ReactNode;
   actionElem?: React.ReactNode;
   children?: React.ReactNode;
-  onClick?: () => void;
+  onPress?: () => void;
 };
 
 const _SettingsRow = ({
@@ -121,28 +145,41 @@ const _SettingsRow = ({
   hint,
   icon,
   children,
-  onClick,
+  onPress,
   isDisabled,
   hasMoreIcon,
   valueElem,
   actionElem,
 }: InternalSettingsRowProps) => {
-  const canInteract = !!onClick && !isDisabled;
+  const canInteract = !!onPress && !isDisabled;
+
+  const handlePress = useCallback(() => {
+    !isDisabled && onPress && onPress();
+  }, [isDisabled, onPress]);
+
+  const handleKeyUp = useCallback(
+    (evt: React.KeyboardEvent) => {
+      if ([' ', 'Enter'].includes(evt.key)) {
+        handlePress();
+      }
+    },
+    [handlePress],
+  );
 
   return (
     <Box>
       <Box
+        tabIndex={canInteract ? 0 : undefined}
         tw={[
-          'flex items-center py-3.5 pl-1.5 pr-3',
-          canInteract ? 'cursor-pointer hover:bg-neutral-soft-1-a' : 'cursor-auto',
+          'flex items-center py-5 pl-1.5 pr-3',
+          canInteract ? 'cursor-pointer hover:bg-neutral-soft-1/50' : 'cursor-auto',
         ]}
-        onClick={() => {
-          !isDisabled && onClick && onClick();
-        }}
+        onClick={handlePress}
+        onKeyUp={handleKeyUp}
       >
         {icon && (
-          <Box tw="-ml-6 w-20 text-center text-xl text-muted">
-            <Icon icon={icon.icon} />
+          <Box tw="w-14 text-4xl text-muted">
+            <Icon icon={icon} fw />
           </Box>
         )}
 
@@ -151,7 +188,7 @@ const _SettingsRow = ({
             <Labels label={label} hint={hint} />
           </Box>
 
-          <HStack spacing={3}>
+          <HStack spacing={3} center="y">
             {valueElem}
 
             {actionElem}
@@ -170,27 +207,74 @@ const _SettingsRow = ({
   );
 };
 
-type SettingsRowChildItemProps = {
+type CommonSettingsRowChildItemProps = {
   children: React.ReactNode;
-  onClick: () => void;
   isDisabled?: boolean;
 };
 
-function SettingsRowChildItem({ children, onClick, isDisabled }: SettingsRowChildItemProps) {
+type SelectChildSettingsRowProps = CommonSettingsRowChildItemProps &
+  Pick<SelectRootProps, 'value' | 'onValueChange'> & {
+    type: 'select';
+    renderSelectContent: () => React.ReactNode;
+  };
+
+type ActionChildSettingsRowProps = CommonSettingsRowChildItemProps & {
+  type: 'action';
+  onPress: () => void;
+};
+
+type SettingsRowChildItemProps = SelectChildSettingsRowProps | ActionChildSettingsRowProps;
+
+function SettingsRowChildItem({ children, isDisabled, ...props }: SettingsRowChildItemProps) {
+  const [open, setOpen] = useState(false);
+
+  let onPress;
+  let endElem;
+
+  switch (props.type) {
+    case 'select':
+      onPress = () => setOpen(true);
+
+      endElem = (
+        <SelectRoot
+          size="sm"
+          open={open}
+          onOpenChange={setOpen}
+          value={props.value}
+          onValueChange={props.onValueChange}
+          disabled={isDisabled}
+        >
+          <SelectTrigger variant="outline" />
+          {props.renderSelectContent()}
+        </SelectRoot>
+      );
+
+      break;
+
+    case 'action':
+      onPress = props.onPress;
+
+      endElem = (
+        <Box tw="text-muted">
+          <Icon icon={['far', 'chevron-right']} />
+        </Box>
+      );
+
+      break;
+  }
+
   return (
     <Box
       tw={[
-        'flex items-center py-3 pl-1.5 pr-3',
-        !isDisabled && 'cursor-pointer hover:bg-neutral-soft-1-a',
+        'flex items-center py-3.5 pl-1.5 pr-3',
+        !isDisabled && 'cursor-pointer hover:bg-neutral-soft-1/50',
         isDisabled && 'cursor-auto',
       ]}
-      onClick={!isDisabled ? onClick : undefined}
+      onClick={!isDisabled ? onPress : undefined}
     >
       <Box tw="flex flex-1 items-center">{children}</Box>
 
-      <Box tw="text-muted">
-        <Icon icon="chevron-right" />
-      </Box>
+      {endElem}
     </Box>
   );
 }
@@ -202,10 +286,16 @@ type LabelsProps = {
 
 function Labels({ label, hint }: LabelsProps) {
   return (
-    <VStack spacing={1}>
-      <Box tw="text-lg font-medium">{label}</Box>
+    <VStack spacing={3}>
+      <Heading size={2} as="h4" trim="both">
+        {label}
+      </Heading>
 
-      {hint && <Box tw="text-muted">{hint}</Box>}
+      {hint && (
+        <Text tw="text-sm text-muted" trim="both">
+          {hint}
+        </Text>
+      )}
     </VStack>
   );
 }
@@ -216,9 +306,9 @@ const CopySettingsRow = ({ value, ...props }: CopySettingsRowProps) => {
   return (
     <_SettingsRow
       {...props}
-      hasMoreIcon={['fal', hasCopied ? 'check' : 'copy']}
+      hasMoreIcon={['far', hasCopied ? 'check' : 'copy']}
       valueElem={<Box>{value}</Box>}
-      onClick={copy}
+      onPress={copy}
     />
   );
 };

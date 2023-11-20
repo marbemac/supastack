@@ -28,7 +28,7 @@ import { SelectProvider, useSelect } from './context.tsx';
  * ---
  */
 
-type SelectRootProps = Omit<
+export type SelectRootProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>,
   'asChild' | 'defaultValue' | 'onValueChange'
 > &
