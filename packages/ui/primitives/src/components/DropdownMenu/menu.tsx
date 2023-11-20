@@ -19,7 +19,7 @@ import type { IconProps } from '../Icon/index.ts';
 import { Icon } from '../Icon/index.ts';
 import { ScrollArea } from '../ScrollArea/index.ts';
 import { VStack } from '../Stack/index.ts';
-import { DropdownMenuProvider, useDropdownMenu } from './context.tsx';
+import { DropdownGroupProvider, DropdownMenuProvider, useDropdownGroup, useDropdownMenu } from './context.tsx';
 
 /**
  * ---
@@ -179,14 +179,22 @@ type DropdownMenuItemProps = Omit<React.ComponentPropsWithoutRef<typeof Dropdown
   BDropdownMenuItemProps<React.ReactElement>;
 
 const DropdownMenuItem = polyRef<'div', DropdownMenuItemProps>(
-  ({ className, icon, shortcut, children, tw, as: As = 'div', ...props }, ref) => {
+  ({ className, icon, shortcut, children, tw, as: As = 'div', preventCloseOnSelect, onSelect, ...props }, ref) => {
     const { slots, slotClasses } = useDropdownMenu();
 
     const baseTw = slots.item({ class: [dropdownMenuStaticClass('item'), tw, className] });
     const contentTw = slots.itemContent({ class: [dropdownMenuStaticClass('itemContent'), slotClasses?.itemContent] });
 
+    const handleSelect = React.useCallback(
+      (evt: Event) => {
+        if (preventCloseOnSelect) evt.preventDefault();
+        if (onSelect) onSelect(evt);
+      },
+      [onSelect, preventCloseOnSelect],
+    );
+
     return (
-      <DropdownMenuPrimitive.Item ref={ref} asChild {...props}>
+      <DropdownMenuPrimitive.Item ref={ref} asChild onSelect={handleSelect} {...props}>
         <As className={baseTw}>
           {icon ? <DropdownMenuIcon icon={icon} /> : null}
           <div className={contentTw}>{children}</div>
@@ -210,8 +218,9 @@ type DropdownMenuCheckboxItemProps = React.ComponentPropsWithoutRef<typeof Dropd
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   DropdownMenuCheckboxItemProps
->(({ className, children, checked, shortcut, tw, ...props }, ref) => {
+>(({ className, children, checked, shortcut, tw, onSelect, ...props }, ref) => {
   const { slots, slotClasses } = useDropdownMenu();
+  const { preventCloseOnSelect } = useDropdownGroup();
 
   const baseTw = slots.checkboxItem({ class: [dropdownMenuStaticClass('checkboxItem'), tw, className] });
   const contentTw = slots.itemContent({ class: [dropdownMenuStaticClass('itemContent'), slotClasses?.itemContent] });
@@ -219,8 +228,22 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     class: [dropdownMenuStaticClass('itemIndicator'), slotClasses?.itemIndicator],
   });
 
+  const handleSelect = React.useCallback(
+    (evt: Event) => {
+      if (preventCloseOnSelect) evt.preventDefault();
+      if (onSelect) onSelect(evt);
+    },
+    [onSelect, preventCloseOnSelect],
+  );
+
   return (
-    <DropdownMenuPrimitive.CheckboxItem ref={ref} className={baseTw} checked={checked} {...props}>
+    <DropdownMenuPrimitive.CheckboxItem
+      ref={ref}
+      className={baseTw}
+      checked={checked}
+      onSelect={handleSelect}
+      {...props}
+    >
       <Box tw={indicatorTw}>
         <DropdownMenuPrimitive.ItemIndicator>
           <Icon icon={faCheck} tw="text-[0.9em]" fw />
@@ -247,8 +270,9 @@ type DropdownMenuRadioItemProps = React.ComponentPropsWithoutRef<typeof Dropdown
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   DropdownMenuRadioItemProps
->(({ className, children, tw, ...props }, ref) => {
+>(({ className, children, tw, onSelect, ...props }, ref) => {
   const { slots, slotClasses } = useDropdownMenu();
+  const { preventCloseOnSelect } = useDropdownGroup();
 
   const baseTw = slots.radioItem({ class: [dropdownMenuStaticClass('radioItem'), tw, className] });
   const contentTw = slots.itemContent({ class: [dropdownMenuStaticClass('itemContent'), slotClasses?.itemContent] });
@@ -256,8 +280,16 @@ const DropdownMenuRadioItem = React.forwardRef<
     class: [dropdownMenuStaticClass('itemIndicator'), slotClasses?.itemIndicator],
   });
 
+  const handleSelect = React.useCallback(
+    (evt: Event) => {
+      if (preventCloseOnSelect) evt.preventDefault();
+      if (onSelect) onSelect(evt);
+    },
+    [onSelect, preventCloseOnSelect],
+  );
+
   return (
-    <DropdownMenuPrimitive.RadioItem ref={ref} className={baseTw} {...props}>
+    <DropdownMenuPrimitive.RadioItem ref={ref} className={baseTw} onSelect={handleSelect} {...props}>
       <Box tw={indicatorTw}>
         <DropdownMenuPrimitive.ItemIndicator>
           <Icon icon={faCircle} tw="ml-1 h-1.5 w-1.5" fw />
@@ -318,11 +350,13 @@ type DropdownMenuGroupProps = React.ComponentPropsWithoutRef<typeof DropdownMenu
 const DropdownMenuGroup = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Group>,
   DropdownMenuGroupProps
->(({ label, children, ...props }, ref) => (
-  <DropdownMenuPrimitive.Group ref={ref} {...props}>
-    {label ? <DropdownMenuLabel>{label}</DropdownMenuLabel> : null}
-    {children}
-  </DropdownMenuPrimitive.Group>
+>(({ label, children, preventCloseOnSelect, ...props }, ref) => (
+  <DropdownGroupProvider value={{ preventCloseOnSelect }}>
+    <DropdownMenuPrimitive.Group ref={ref} {...props}>
+      {label ? <DropdownMenuLabel>{label}</DropdownMenuLabel> : null}
+      {children}
+    </DropdownMenuPrimitive.Group>
+  </DropdownGroupProvider>
 ));
 DropdownMenuGroup.displayName = DropdownMenuPrimitive.Group.displayName;
 
@@ -338,11 +372,13 @@ type DropdownMenuRadioGroupProps = React.ComponentPropsWithoutRef<typeof Dropdow
 const DropdownMenuRadioGroup = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioGroup>,
   DropdownMenuRadioGroupProps
->(({ label, children, ...props }, ref) => (
-  <DropdownMenuPrimitive.RadioGroup ref={ref} {...props}>
-    {label ? <DropdownMenuLabel>{label}</DropdownMenuLabel> : null}
-    {children}
-  </DropdownMenuPrimitive.RadioGroup>
+>(({ label, children, preventCloseOnSelect, ...props }, ref) => (
+  <DropdownGroupProvider value={{ preventCloseOnSelect }}>
+    <DropdownMenuPrimitive.RadioGroup ref={ref} {...props}>
+      {label ? <DropdownMenuLabel>{label}</DropdownMenuLabel> : null}
+      {children}
+    </DropdownMenuPrimitive.RadioGroup>
+  </DropdownGroupProvider>
 ));
 DropdownMenuRadioGroup.displayName = DropdownMenuPrimitive.RadioGroup.displayName;
 

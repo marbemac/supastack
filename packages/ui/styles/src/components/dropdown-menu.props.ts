@@ -2,29 +2,32 @@ import type { SlotProp, StyleProps } from '../types.ts';
 import type { DropdownMenuSlots, DropdownMenuStyleProps } from './dropdown-menu.styles.ts';
 import type { IconProps } from './icon.props.ts';
 
-export interface DropdownMenuContentProps extends StyleProps, DropdownMenuStyleProps, SlotProp<DropdownMenuSlots> {}
+export type DropdownMenuContentProps = {} & StyleProps & DropdownMenuStyleProps & SlotProp<DropdownMenuSlots>;
 
-export interface DropdownMenuItemProps<T> extends StyleProps {
+export type DropdownMenuItemProps<T> = {
   icon?: IconProps<T>['icon'];
   shortcut?: string;
-}
+  preventCloseOnSelect?: boolean;
+} & StyleProps;
 
-export interface DropdownMenuCheckboxItemProps extends StyleProps {
+export type DropdownMenuCheckboxItemProps = {
   shortcut?: string;
   checked?: boolean | 'indeterminate';
   onCheckedChange?: (checked: boolean) => void;
-}
+} & StyleProps;
 
-export interface DropdownMenuRadioItemProps extends StyleProps {
+export type DropdownMenuRadioItemProps = {
   shortcut?: string;
   value?: string;
   onValueChange?: (value: string) => void;
-}
+} & StyleProps;
 
-export interface DropdownMenuGroupProps {
+export type DropdownMenuGroupProps = {
   label?: string;
-}
+  preventCloseOnSelect?: boolean;
+};
 
-export interface DropdownMenuRadioGroupProps {
+export type DropdownMenuRadioGroupProps = {
   label?: string;
-}
+  preventCloseOnSelect?: boolean;
+};

@@ -60,10 +60,12 @@ export type SettingsRowProps =
   | ActionSettingsRowProps
   | CopySettingsRowProps;
 
+// @TODO move settings styling to ui-styles
 export const SettingsRow = (props: SettingsRowProps) => {
   const [open, onOpenChange] = useState(false);
 
   switch (props.type) {
+    // @TODO implement switch settings row
     case 'switch':
       return <div>@TODO</div>;
     // return (

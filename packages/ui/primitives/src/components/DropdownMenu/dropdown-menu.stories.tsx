@@ -68,6 +68,7 @@ export const Checkboxes = {
 const CheckboxesExample = () => {
   type Checked = DropdownMenuCheckboxItemProps['checked'];
 
+  const [preventCloseOnSelect, setPreventCloseOnSelect] = useState(false);
   const [bookmarksChecked, setBookmarksChecked] = useState<Checked>(true);
   const [urlsChecked, setUrlsChecked] = useState<Checked>(false);
   const [person, setPerson] = useState('marc');
@@ -105,7 +106,10 @@ const CheckboxesExample = () => {
           </DropdownMenuSub>
         </DropdownMenuGroup>
 
-        <DropdownMenuGroup>
+        <DropdownMenuGroup preventCloseOnSelect={preventCloseOnSelect}>
+          <DropdownMenuCheckboxItem checked={preventCloseOnSelect} onCheckedChange={setPreventCloseOnSelect}>
+            Prevent Close on Select
+          </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem shortcut="⌘+B" checked={bookmarksChecked} onCheckedChange={setBookmarksChecked}>
             Show Bookmarks
           </DropdownMenuCheckboxItem>
@@ -114,7 +118,12 @@ const CheckboxesExample = () => {
           </DropdownMenuCheckboxItem>
         </DropdownMenuGroup>
 
-        <DropdownMenuRadioGroup label="People" value={person} onValueChange={setPerson}>
+        <DropdownMenuRadioGroup
+          label="People"
+          value={person}
+          onValueChange={setPerson}
+          preventCloseOnSelect={preventCloseOnSelect}
+        >
           <DropdownMenuRadioItem value="marc">Marc Mac</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="jane">Jane Doe</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>

@@ -10,3 +10,12 @@ export const [DropdownMenuProvider, useDropdownMenu] = createContext<DropdownMen
   name: 'DropdownMenuContext',
   strict: true,
 });
+
+type DropdownGroupContextValue = {
+  preventCloseOnSelect?: boolean;
+};
+
+export const [DropdownGroupProvider, useDropdownGroup] = createContext<DropdownGroupContextValue>({
+  name: 'DropdownGroupContext',
+  strict: true,
+});
