@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "connect": "^3.7.0",
-    "hono": "3.10.1",
+    "hono": "3.10.2",
     "set-cookie-parser": "^2.6.0"
   },
   "devDependencies": {
     "@types/connect": "^3.4.38",
-    "@types/set-cookie-parser": "^2.4.6"
+    "@types/set-cookie-parser": "^2.4.7"
   }
 }

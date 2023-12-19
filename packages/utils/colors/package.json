@@ -13,6 +13,6 @@
     "color2k": "^2.0.2"
   },
   "devDependencies": {
-    "vitest": "~0.34.6"
+    "vitest": "~1.1.0"
   }
 }
