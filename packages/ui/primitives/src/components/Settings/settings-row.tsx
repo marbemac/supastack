@@ -32,6 +32,12 @@ type DialogSettingsRowProps = CommonSettingsRowProps & {
   value?: string | React.ReactNode;
 };
 
+type SelectSettingsRowProps = CommonSettingsRowProps &
+  Pick<SelectRootProps, 'value' | 'onValueChange'> & {
+    type: 'select';
+    renderSelectContent: () => React.ReactNode;
+  };
+
 type ListSettingsRowProps = CommonSettingsRowProps & {
   type: 'list';
   onPress?: () => unknown;
@@ -56,6 +62,7 @@ type CopySettingsRowProps = CommonSettingsRowProps & {
 export type SettingsRowProps =
   | SwitchSettingsRowProps
   | DialogSettingsRowProps
+  | SelectSettingsRowProps
   | ListSettingsRowProps
   | ActionSettingsRowProps
   | CopySettingsRowProps;
@@ -100,6 +107,28 @@ export const SettingsRow = (props: SettingsRowProps) => {
         </_SettingsRow>
       );
 
+    case 'select':
+      return (
+        <_SettingsRow
+          {...props}
+          onPress={() => onOpenChange(true)}
+          isActionElemTabbable
+          actionElem={
+            <SelectRoot
+              size="sm"
+              open={open}
+              onOpenChange={onOpenChange}
+              value={props.value}
+              onValueChange={props.onValueChange}
+              disabled={props.isDisabled}
+            >
+              <SelectTrigger variant="outline" />
+              {props.renderSelectContent()}
+            </SelectRoot>
+          }
+        />
+      );
+
     case 'action':
       return <_SettingsRow {...props} />;
 
@@ -138,6 +167,7 @@ type InternalSettingsRowProps = Omit<SettingsRowProps, 'type' | 'onClick'> & {
   hasMoreIcon?: IconProps['icon'];
   valueElem?: React.ReactNode;
   actionElem?: React.ReactNode;
+  isActionElemTabbable?: boolean;
   children?: React.ReactNode;
   onPress?: () => void;
 };
@@ -152,8 +182,10 @@ const _SettingsRow = ({
   hasMoreIcon,
   valueElem,
   actionElem,
+  isActionElemTabbable,
 }: InternalSettingsRowProps) => {
   const canInteract = !!onPress && !isDisabled;
+  const isRowTabbable = canInteract && !isActionElemTabbable;
 
   const handlePress = useCallback(() => {
     !isDisabled && onPress && onPress();
@@ -171,13 +203,13 @@ const _SettingsRow = ({
   return (
     <Box>
       <Box
-        tabIndex={canInteract ? 0 : undefined}
+        tabIndex={isRowTabbable ? 0 : undefined}
         tw={[
           'flex items-center py-5 pl-1.5 pr-3',
           canInteract ? 'cursor-pointer hover:bg-neutral-soft-1/50' : 'cursor-auto',
         ]}
         onClick={handlePress}
-        onKeyUp={handleKeyUp}
+        onKeyUp={isRowTabbable ? handleKeyUp : undefined}
       >
         {icon && (
           <Box tw="w-14 text-4xl text-muted">

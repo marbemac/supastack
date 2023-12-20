@@ -27,39 +27,12 @@ export const KitchenSink: Story = {
       sa: 'none',
       su: '21',
     });
+
     const updateReminderEmails = (day: string, time: string) => {
       setReminderEmails({ ...reminderEmails, [day]: time });
     };
 
-    const renderSelectContent = () => (
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem value="none">{`Don't remind me`}</SelectItem>
-        </SelectGroup>
-
-        <SelectGroup>
-          <SelectItem value="4">4am</SelectItem>
-          <SelectItem value="5">5am</SelectItem>
-          <SelectItem value="6">6am</SelectItem>
-          <SelectItem value="7">7am</SelectItem>
-          <SelectItem value="8">8am</SelectItem>
-          <SelectItem value="9">9am</SelectItem>
-          <SelectItem value="10">10am</SelectItem>
-          <SelectItem value="11">11am</SelectItem>
-          <SelectItem value="12">12pm</SelectItem>
-          <SelectItem value="13">1pm</SelectItem>
-          <SelectItem value="14">2pm</SelectItem>
-          <SelectItem value="15">3pm</SelectItem>
-          <SelectItem value="16">4pm</SelectItem>
-          <SelectItem value="17">5pm</SelectItem>
-          <SelectItem value="18">6pm</SelectItem>
-          <SelectItem value="19">7pm</SelectItem>
-          <SelectItem value="20">8pm</SelectItem>
-          <SelectItem value="21">9pm</SelectItem>
-          <SelectItem value="22">10pm</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    );
+    const [theme, setTheme] = useState('system');
 
     return (
       <SettingsSections tw="h-full w-144">
@@ -69,6 +42,14 @@ export const KitchenSink: Story = {
           </SettingsRow>
 
           <SettingsRow type="copy" label="API Key" hint="Keep it secret!" value="123xxx" />
+
+          <SettingsRow
+            type="select"
+            label="Theme"
+            value={theme}
+            onValueChange={setTheme}
+            renderSelectContent={ThemeSelectContent}
+          />
 
           <SettingsRow
             type="list"
@@ -82,35 +63,35 @@ export const KitchenSink: Story = {
                 children: 'Monday',
                 value: reminderEmails.mo,
                 onValueChange: val => updateReminderEmails('mo', val),
-                renderSelectContent,
+                renderSelectContent: ReminderTimeSelectContent,
               },
               {
                 type: 'select',
                 children: 'Tuesday',
                 value: reminderEmails.tu,
                 onValueChange: val => updateReminderEmails('tu', val),
-                renderSelectContent,
+                renderSelectContent: ReminderTimeSelectContent,
               },
               {
                 type: 'select',
                 children: 'Wednesday',
                 value: reminderEmails.we,
                 onValueChange: val => updateReminderEmails('we', val),
-                renderSelectContent,
+                renderSelectContent: ReminderTimeSelectContent,
               },
               {
                 type: 'select',
                 children: 'Thursday',
                 value: reminderEmails.th,
                 onValueChange: val => updateReminderEmails('th', val),
-                renderSelectContent,
+                renderSelectContent: ReminderTimeSelectContent,
               },
               {
                 type: 'select',
                 children: 'Friday',
                 value: reminderEmails.fr,
                 onValueChange: val => updateReminderEmails('fr', val),
-                renderSelectContent,
+                renderSelectContent: ReminderTimeSelectContent,
               },
             ]}
           />
@@ -151,3 +132,43 @@ export const KitchenSink: Story = {
     );
   },
 };
+
+const ThemeSelectContent = () => (
+  <SelectContent>
+    <SelectGroup>
+      <SelectItem value="system">System</SelectItem>
+      <SelectItem value="light">Light</SelectItem>
+      <SelectItem value="dark">Dark</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+);
+
+const ReminderTimeSelectContent = () => (
+  <SelectContent>
+    <SelectGroup>
+      <SelectItem value="none">{`Don't remind me`}</SelectItem>
+    </SelectGroup>
+
+    <SelectGroup>
+      <SelectItem value="4">4am</SelectItem>
+      <SelectItem value="5">5am</SelectItem>
+      <SelectItem value="6">6am</SelectItem>
+      <SelectItem value="7">7am</SelectItem>
+      <SelectItem value="8">8am</SelectItem>
+      <SelectItem value="9">9am</SelectItem>
+      <SelectItem value="10">10am</SelectItem>
+      <SelectItem value="11">11am</SelectItem>
+      <SelectItem value="12">12pm</SelectItem>
+      <SelectItem value="13">1pm</SelectItem>
+      <SelectItem value="14">2pm</SelectItem>
+      <SelectItem value="15">3pm</SelectItem>
+      <SelectItem value="16">4pm</SelectItem>
+      <SelectItem value="17">5pm</SelectItem>
+      <SelectItem value="18">6pm</SelectItem>
+      <SelectItem value="19">7pm</SelectItem>
+      <SelectItem value="20">8pm</SelectItem>
+      <SelectItem value="21">9pm</SelectItem>
+      <SelectItem value="22">10pm</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+);
