@@ -28,14 +28,7 @@ import { SelectProvider, useSelect } from './context.tsx';
  * ---
  */
 
-export type SelectRootProps = Omit<
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>,
-  'asChild' | 'defaultValue' | 'onValueChange'
-> &
-  BSelectProps & {
-    // Controlled only
-    onValueChange(value: string): void;
-  };
+export type SelectRootProps = BSelectProps<React.ReactNode>;
 
 const SelectRoot: React.FC<SelectRootProps> = props => {
   const { children, slotClasses, size, inset, value, ...rootProps } = props;

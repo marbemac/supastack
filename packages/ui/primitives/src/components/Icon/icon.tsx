@@ -12,7 +12,7 @@ import { FaSvg } from './svg-icon.tsx';
 
 config.autoAddCss = false;
 
-export type IconProps = BIconProps<React.ReactElement>;
+export type IconProps = BIconProps<React.ReactNode>;
 
 export const DEFAULT_STYLE: IconPrefix = 'fas';
 
@@ -114,7 +114,7 @@ function normalizeIconArgs(
 
   // if it's a string, use it as the icon name
   if (typeof icon === 'string') {
-    return { prefix: defaultPrefix, iconName: icon };
+    return { prefix: defaultPrefix, iconName: icon as IconName };
   }
 
   return IS_ELEMENT;

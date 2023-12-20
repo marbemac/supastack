@@ -24,6 +24,8 @@ export * from './scroll.props.ts';
 export * from './scroll.styles.ts';
 export * from './select.props.ts';
 export * from './select.styles.ts';
+export * from './settings.props.ts';
+export * from './settings.styles.ts';
 export * from './stack.props.ts';
 export * from './stack.styles.ts';
 export * from './tab-menu.props.ts';

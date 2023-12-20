@@ -7,9 +7,7 @@ import { useMemo } from 'react';
 import { HStack } from '../Stack/stack.tsx';
 import { ButtonGroupProvider } from './button-group-context.ts';
 
-export type ButtonGroupProps = BButtonGroupProps<React.ReactElement> & {
-  children?: React.ReactNode;
-};
+export type ButtonGroupProps = BButtonGroupProps<React.ReactElement>;
 
 export const ButtonGroup = (props: ButtonGroupProps) => {
   const [local, variantProps] = splitPropsVariants(props, buttonGroupStyle.variantKeys);

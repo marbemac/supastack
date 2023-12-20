@@ -1,8 +1,10 @@
 import type { SlotProp, StyleProps } from '../types.ts';
 import type { StackSlots, StackStyleProps } from './stack.styles.ts';
 
-export interface StackProps<T> extends StackRootProps<T> {}
+export type StackProps<T> = StackRootProps<T>;
 
-interface StackRootProps<T> extends StyleProps, StackStyleProps, SlotProp<StackSlots> {
+type StackRootProps<T> = {
   divider?: boolean | T;
-}
+} & StyleProps &
+  StackStyleProps &
+  SlotProp<StackSlots>;

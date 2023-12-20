@@ -1,4 +1,10 @@
-import { useCallback, useState } from 'react';
+import {
+  type SettingsRowProps as BSettingsRowProps,
+  settingsRowStaticClass,
+  settingsRowStyle,
+  splitPropsVariants,
+} from '@supastack/ui-styles';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useClipboard } from '../../hooks/use-clipboard.ts';
 import { Box } from '../Box/index.ts';
@@ -6,70 +12,23 @@ import { Button } from '../Button/index.ts';
 import { Dialog, DialogContent, DialogTitle } from '../Dialog/index.ts';
 import { Heading } from '../Heading/index.ts';
 import { Icon, type IconProps } from '../Icon/index.ts';
-import type { SelectRootProps } from '../Select/index.ts';
 import { SelectRoot, SelectTrigger } from '../Select/index.ts';
 import { HStack, VStack } from '../Stack/index.ts';
 import { Text } from '../Text/index.ts';
+import { SettingsRowChild } from './settings-row-child.tsx';
 
-type CommonSettingsRowProps = {
-  label: string;
-  hint?: string | React.ReactNode;
-  icon?: IconProps['icon'];
-  isDisabled?: boolean;
-};
+export type SettingsRowProps = BSettingsRowProps<React.ReactNode>;
 
-type SwitchSettingsRowProps = CommonSettingsRowProps & {
-  type: 'switch';
-  onPress: (isSelected: boolean) => unknown;
-  isSelected: boolean;
-  switchLabel: string;
-};
-
-type DialogSettingsRowProps = CommonSettingsRowProps & {
-  type: 'dialog';
-  // The contents to put in the Dialog
-  children: React.ReactNode;
-  value?: string | React.ReactNode;
-};
-
-type SelectSettingsRowProps = CommonSettingsRowProps &
-  Pick<SelectRootProps, 'value' | 'onValueChange'> & {
-    type: 'select';
-    renderSelectContent: () => React.ReactNode;
-  };
-
-type ListSettingsRowProps = CommonSettingsRowProps & {
-  type: 'list';
-  onPress?: () => unknown;
-  noAction?: boolean;
-  actionText?: string;
-  items: SettingsRowChildItemProps[];
-  isLoadingItems?: boolean;
-};
-
-type ActionSettingsRowProps = CommonSettingsRowProps & {
-  type: 'action';
-  onPress: () => unknown;
-  hasMoreIcon?: IconProps['icon'];
-  value?: string;
-};
-
-type CopySettingsRowProps = CommonSettingsRowProps & {
-  type: 'copy';
-  value: string;
-};
-
-export type SettingsRowProps =
-  | SwitchSettingsRowProps
-  | DialogSettingsRowProps
-  | SelectSettingsRowProps
-  | ListSettingsRowProps
-  | ActionSettingsRowProps
-  | CopySettingsRowProps;
-
-// @TODO move settings styling to ui-styles
 export const SettingsRow = (props: SettingsRowProps) => {
   const [open, onOpenChange] = useState(false);
+
+  const [, variantProps] = splitPropsVariants(props, settingsRowStyle.variantKeys);
+
+  const slots = useMemo(
+    () => settingsRowStyle(variantProps),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [...Object.values(variantProps)],
+  );
 
   switch (props.type) {
     // @TODO implement switch settings row
@@ -91,12 +50,17 @@ export const SettingsRow = (props: SettingsRowProps) => {
       return (
         <_SettingsRow
           {...props}
+          slots={slots}
           hasMoreIcon={['far', 'chevron-right']}
           valueElem={<Box>{props.value}</Box>}
           onPress={() => onOpenChange(true)}
         >
           <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent tw="w-full">
+            <DialogContent
+              tw={slots.dialogContent({
+                class: [settingsRowStaticClass('dialogContent'), props.slotClasses?.dialogContent],
+              })}
+            >
               <VStack divider spacing={5}>
                 <DialogTitle>{props.label}</DialogTitle>
 
@@ -111,6 +75,7 @@ export const SettingsRow = (props: SettingsRowProps) => {
       return (
         <_SettingsRow
           {...props}
+          slots={slots}
           onPress={() => onOpenChange(true)}
           isActionElemTabbable
           actionElem={
@@ -130,15 +95,16 @@ export const SettingsRow = (props: SettingsRowProps) => {
       );
 
     case 'action':
-      return <_SettingsRow {...props} />;
+      return <_SettingsRow {...props} slots={slots} />;
 
     case 'copy':
-      return <CopySettingsRow {...props} />;
+      return <CopySettingsRow {...props} slots={slots} />;
 
     case 'list':
       return (
         <_SettingsRow
           {...props}
+          slots={slots}
           onPress={props.noAction ? undefined : props.onPress}
           actionElem={
             !props.noAction ? (
@@ -149,11 +115,19 @@ export const SettingsRow = (props: SettingsRowProps) => {
           }
         >
           {props.items?.length ? (
-            <Box tw="pl-14">
-              <Box tw="h-px border-neutral-line-1/60" />
+            <Box
+              tw={slots.listContainer({
+                class: [settingsRowStaticClass('listContainer'), props.slotClasses?.listContainer],
+              })}
+            >
+              <Box
+                tw={slots.listDivider({
+                  class: [settingsRowStaticClass('listDivider'), props.slotClasses?.listDivider],
+                })}
+              />
               <VStack divider>
                 {props.items.map((i, k) => (
-                  <SettingsRowChildItem key={k} {...i} />
+                  <SettingsRowChild key={k} {...i} />
                 ))}
               </VStack>
             </Box>
@@ -164,6 +138,7 @@ export const SettingsRow = (props: SettingsRowProps) => {
 };
 
 type InternalSettingsRowProps = Omit<SettingsRowProps, 'type' | 'onClick'> & {
+  slots: ReturnType<typeof settingsRowStyle>;
   hasMoreIcon?: IconProps['icon'];
   valueElem?: React.ReactNode;
   actionElem?: React.ReactNode;
@@ -173,6 +148,10 @@ type InternalSettingsRowProps = Omit<SettingsRowProps, 'type' | 'onClick'> & {
 };
 
 const _SettingsRow = ({
+  tw,
+  UNSAFE_class,
+  slots,
+  slotClasses,
   label,
   hint,
   icon,
@@ -186,6 +165,15 @@ const _SettingsRow = ({
 }: InternalSettingsRowProps) => {
   const canInteract = !!onPress && !isDisabled;
   const isRowTabbable = canInteract && !isActionElemTabbable;
+
+  const baseTw = slots.base({ class: [settingsRowStaticClass('base'), tw, UNSAFE_class] });
+  const containerTw = slots.container({
+    canInteract,
+    class: [settingsRowStaticClass('container'), slotClasses?.container],
+  });
+  const startIconTw = slots.startIcon({ class: [settingsRowStaticClass('startIcon'), slotClasses?.startIcon] });
+  const contentTw = slots.content({ class: [settingsRowStaticClass('content'), slotClasses?.content] });
+  const endIconTw = slots.endIcon({ class: [settingsRowStaticClass('endIcon'), slotClasses?.endIcon] });
 
   const handlePress = useCallback(() => {
     !isDisabled && onPress && onPress();
@@ -201,26 +189,21 @@ const _SettingsRow = ({
   );
 
   return (
-    <Box>
+    <Box tw={baseTw}>
       <Box
         tabIndex={isRowTabbable ? 0 : undefined}
-        tw={[
-          'flex items-center py-5 pl-1.5 pr-3',
-          canInteract ? 'cursor-pointer hover:bg-neutral-soft-1/50' : 'cursor-auto',
-        ]}
+        tw={containerTw}
         onClick={handlePress}
         onKeyUp={isRowTabbable ? handleKeyUp : undefined}
       >
         {icon && (
-          <Box tw="w-14 text-4xl text-muted">
+          <Box tw={startIconTw}>
             <Icon icon={icon} fw />
           </Box>
         )}
 
-        <Box tw="flex flex-1 items-center">
-          <Box tw="flex-1">
-            <Labels label={label} hint={hint} />
-          </Box>
+        <Box tw={contentTw}>
+          <Labels slots={slots} slotClasses={slotClasses} label={label} hint={hint} />
 
           <HStack spacing={3} center="y">
             {valueElem}
@@ -228,7 +211,7 @@ const _SettingsRow = ({
             {actionElem}
 
             {hasMoreIcon && (
-              <Box tw="text-muted">
+              <Box tw={endIconTw}>
                 <Icon icon={hasMoreIcon} />
               </Box>
             )}
@@ -241,92 +224,20 @@ const _SettingsRow = ({
   );
 };
 
-type CommonSettingsRowChildItemProps = {
-  children: React.ReactNode;
-  isDisabled?: boolean;
-};
+type LabelsProps = Pick<InternalSettingsRowProps, 'slots' | 'slotClasses' | 'label' | 'hint'>;
 
-type SelectChildSettingsRowProps = CommonSettingsRowChildItemProps &
-  Pick<SelectRootProps, 'value' | 'onValueChange'> & {
-    type: 'select';
-    renderSelectContent: () => React.ReactNode;
-  };
-
-type ActionChildSettingsRowProps = CommonSettingsRowChildItemProps & {
-  type: 'action';
-  onPress: () => void;
-};
-
-type SettingsRowChildItemProps = SelectChildSettingsRowProps | ActionChildSettingsRowProps;
-
-function SettingsRowChildItem({ children, isDisabled, ...props }: SettingsRowChildItemProps) {
-  const [open, setOpen] = useState(false);
-
-  let onPress;
-  let endElem;
-
-  switch (props.type) {
-    case 'select':
-      onPress = () => setOpen(true);
-
-      endElem = (
-        <SelectRoot
-          size="sm"
-          open={open}
-          onOpenChange={setOpen}
-          value={props.value}
-          onValueChange={props.onValueChange}
-          disabled={isDisabled}
-        >
-          <SelectTrigger variant="outline" />
-          {props.renderSelectContent()}
-        </SelectRoot>
-      );
-
-      break;
-
-    case 'action':
-      onPress = props.onPress;
-
-      endElem = (
-        <Box tw="text-muted">
-          <Icon icon={['far', 'chevron-right']} />
-        </Box>
-      );
-
-      break;
-  }
+function Labels({ slots, slotClasses, label, hint }: LabelsProps) {
+  const labelTw = slots.label({ class: [settingsRowStaticClass('label'), slotClasses?.label] });
+  const hintTw = slots.hint({ class: [settingsRowStaticClass('hint'), slotClasses?.hint] });
 
   return (
-    <Box
-      tw={[
-        'flex items-center py-3.5 pl-1.5 pr-3',
-        !isDisabled && 'cursor-pointer hover:bg-neutral-soft-1/50',
-        isDisabled && 'cursor-auto',
-      ]}
-      onClick={!isDisabled ? onPress : undefined}
-    >
-      <Box tw="flex flex-1 items-center">{children}</Box>
-
-      {endElem}
-    </Box>
-  );
-}
-
-type LabelsProps = {
-  label: string;
-  hint?: string | React.ReactNode;
-};
-
-function Labels({ label, hint }: LabelsProps) {
-  return (
-    <VStack spacing={3}>
+    <VStack spacing={3} tw={labelTw}>
       <Heading size={2} as="h4" trim="both">
         {label}
       </Heading>
 
       {hint && (
-        <Text tw="text-sm text-muted" trim="both">
+        <Text tw={hintTw} trim="both">
           {hint}
         </Text>
       )}
@@ -334,7 +245,10 @@ function Labels({ label, hint }: LabelsProps) {
   );
 }
 
-const CopySettingsRow = ({ value, ...props }: CopySettingsRowProps) => {
+const CopySettingsRow = ({
+  value,
+  ...props
+}: Extract<SettingsRowProps, { type: 'copy' }> & { slots: ReturnType<typeof settingsRowStyle> }) => {
   const { copy, hasCopied } = useClipboard(value);
 
   return (

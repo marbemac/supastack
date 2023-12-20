@@ -26,4 +26,5 @@ export type ButtonGroupProps<T> = StyleProps &
   ButtonGroupStyleProps &
   Pick<ButtonProps<T>, 'size' | 'variant' | 'intent' | 'isDisabled'> & {
     spacing?: StackProps<T>['spacing'];
+    children?: T;
   };
