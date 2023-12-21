@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@supastack/db-pg-client": "workspace:*",
-    "drizzle-kit": "0.20.5",
+    "drizzle-kit": "~0.20.5",
     "kysely": "0.26.3",
     "postgres": "~3.4.3"
   }

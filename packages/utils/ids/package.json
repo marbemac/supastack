@@ -15,6 +15,6 @@
     "fast-json-stable-stringify": "^2.1.0",
     "fnv-plus": "^1.3.1",
     "nanoid": "~5.0.3",
-    "valibot": "0.21.0"
+    "valibot": "~0.21.0"
   }
 }
