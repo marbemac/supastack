@@ -16,7 +16,7 @@
     }
   },
   "dependencies": {
-    "@clickhouse/client": "0.2.6",
+    "@clickhouse/client": "0.2.7",
     "@supastack/utils-ids": "workspace:*",
     "@supastack/utils-streams": "workspace:*",
     "@supastack/utils-urls": "workspace:*"

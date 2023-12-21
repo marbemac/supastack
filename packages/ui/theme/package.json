@@ -12,10 +12,10 @@
   "dependencies": {
     "@material/material-color-utilities": "~0.2.7",
     "@supastack/utils-colors": "workspace:*",
-    "color2k": "^2.0.2",
+    "color2k": "^2.0.3",
     "deepmerge": "^4.3.1",
     "mem": "10.0.0",
     "quick-lru": "7.0.0",
-    "valibot": "~0.21.0"
+    "valibot": "~0.24.1"
   }
 }
