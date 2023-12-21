@@ -6,8 +6,8 @@ import {
 } from '@supastack/ui-styles';
 import { useMemo } from 'react';
 
-import { Heading } from '../Heading/heading.tsx';
-import { VStack } from '../Stack/stack.tsx';
+import { Heading } from '../Heading/index.ts';
+import { VStack } from '../Stack/index.ts';
 
 export type SettingsSectionProps = BSettingsSectionProps<React.ReactNode>;
 
@@ -28,9 +28,11 @@ export const SettingsSection = (props: SettingsSectionProps) => {
 
   return (
     <VStack spacing={3} tw={baseTw} {...others}>
-      <Heading size={5} as="h2" tw={titleTw}>
-        {title}
-      </Heading>
+      {title && (
+        <Heading size={6} as="h2" tw={titleTw}>
+          {title}
+        </Heading>
+      )}
 
       <VStack divider tw={contentTw}>
         {children}

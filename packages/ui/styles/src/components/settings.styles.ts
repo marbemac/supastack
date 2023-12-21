@@ -36,7 +36,7 @@ export const settingSectionStyle = tv(
     slots: {
       base: tx(''),
       title: tx(''),
-      content: tx('-mx-2 rounded-lg p-1'),
+      content: tx('-mx-2 rounded-lg'),
     },
     defaultVariants: {
       isDangerZone: false,
@@ -68,9 +68,9 @@ export const settingsRowStyle = tv(
   {
     slots: {
       base: tx(''),
-      container: tx('flex items-center rounded-lg py-5 pl-1.5 pr-3'),
+      container: tx('flex items-center rounded-lg px-2 py-5'),
       startIcon: tx('w-14 text-4xl text-muted'),
-      content: tx('flex flex-1 items-center'),
+      content: tx('flex flex-1 items-center gap-10'),
       label: tx('flex-1'),
       hint: tx('text-sm text-muted'),
       endIcon: tx('text-muted'),
@@ -78,7 +78,7 @@ export const settingsRowStyle = tv(
       dialogContent: tx('w-full'),
 
       listContainer: tx('pl-14'),
-      listDivider: tx('h-px border-neutral-line-1/60'),
+      listDivider: tx('h-px bg-neutral-line-1/60'),
     },
     defaultVariants: {
       canInteract: false,
@@ -111,7 +111,7 @@ export const settingsRowStaticClass = makeStaticClass<SettingsRowSlots>('setting
 export const settingsRowChildStyle = tv(
   {
     slots: {
-      base: tx('flex items-center py-3.5 pl-1.5 pr-3'),
+      base: tx('flex items-center px-2 py-3'),
       content: tx('flex flex-1 items-center'),
       endIcon: tx('text-muted'),
     },

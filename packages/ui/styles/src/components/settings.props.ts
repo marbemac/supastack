@@ -10,6 +10,8 @@ import type {
 } from './settings.styles.ts';
 
 export type SettingsSectionsProps<T> = StyleProps & {
+  title?: string;
+
   /** Should be a list of SettingsSections components */
   children: T;
 };
@@ -17,7 +19,7 @@ export type SettingsSectionsProps<T> = StyleProps & {
 export type SettingsSectionProps<T> = StyleProps &
   SettingSectionStyleProps &
   SlotProp<SettingSectionSlots> & {
-    title: string;
+    title?: string;
 
     /** Should be a list of SettingsRow components */
     children: T;

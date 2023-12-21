@@ -44,7 +44,7 @@ export const baseMenuStyle = tv(
       subtriggerIcon: tx('ml-auto text-sm opacity-75'),
 
       label: tx('select-none px-2 py-1.5 text-sm font-light text-muted'),
-      separator: tx('mx-1.5 my-2 h-px bg-neutral-line-1'),
+      separator: tx('mx-1.5 my-2 h-px bg-neutral-line-1-a'),
       shortcut: tx('ml-auto text-xs tracking-widest opacity-60'),
     },
 
