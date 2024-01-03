@@ -162,7 +162,7 @@ export const plugin = basePlugin.withOptions(
         },
 
         '.animate-overlay': {
-          "&[data-state='open']::after": {
+          "&[data-state='open']::before": {
             [`@apply ${tx('motion-safe:animate-overlay-show')}`]: {},
           },
         },

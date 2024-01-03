@@ -47,7 +47,8 @@ export const Button = polyRef<'button', ButtonProps>((props, ref) => {
   );
 
   const baseTw = slots.base({ class: [buttonStaticClass('base'), tw, UNSAFE_class] });
-  const iconTw = slots.icon({ class: [buttonStaticClass('icon'), slotClasses?.icon] });
+  const startIconTw = slots.startIcon({ class: [buttonStaticClass('startIcon'), slotClasses?.startIcon] });
+  const endIconTw = slots.endIcon({ class: [buttonStaticClass('endIcon'), slotClasses?.endIcon] });
   const textTw = slots.text({ class: [buttonStaticClass('text'), slotClasses?.text] });
 
   const startIconElem = !variantProps.isLoading
@@ -69,12 +70,12 @@ export const Button = polyRef<'button', ButtonProps>((props, ref) => {
   return (
     <As {...others} ref={ref} className={baseTw} disabled={variantProps.isDisabled}>
       {startIconElem && (!isIconButton || !endIconElem) ? (
-        <Icon tw={iconTw} icon={startIconElem} spin={variantProps.isLoading} />
+        <Icon tw={startIconTw} icon={startIconElem} spin={variantProps.isLoading} />
       ) : null}
 
       {hasContent ? <Box tw={textTw}>{contentElem}</Box> : null}
 
-      {endIconElem ? <Icon tw={iconTw} icon={endIconElem} spin={variantProps.isLoading} /> : null}
+      {endIconElem ? <Icon tw={endIconTw} icon={endIconElem} spin={variantProps.isLoading} fw /> : null}
     </As>
   );
 });

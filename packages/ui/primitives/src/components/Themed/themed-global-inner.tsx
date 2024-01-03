@@ -4,6 +4,7 @@ import { DirectionProvider } from '@radix-ui/react-direction';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cssObjToString, type GeneratedTheme } from '@supastack/ui-theme';
 
+import { Style } from './style.tsx';
 import { GlobalThemeContext } from './theme-context.ts';
 
 type ThemedGlobalInnerProps = {
@@ -22,7 +23,7 @@ export const ThemedGlobalInner = ({ children, generatedTheme, generatedDarkTheme
         <GlobalThemeContext.Provider value={generatedTheme}>
           {children}
 
-          <style jsx global>
+          <Style global>
             {`
               ${styles}
 
@@ -30,7 +31,7 @@ export const ThemedGlobalInner = ({ children, generatedTheme, generatedDarkTheme
                 ${darkStyles}
               }
             `}
-          </style>
+          </Style>
         </GlobalThemeContext.Provider>
       </DirectionProvider>
     </TooltipPrimitive.Provider>

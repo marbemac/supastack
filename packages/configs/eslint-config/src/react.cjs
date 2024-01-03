@@ -2,7 +2,7 @@
 const config = {
   root: true,
 
-  extends: ['@supastack/eslint-config/base'],
+  extends: ['./base.cjs'],
 
   overrides: [
     {

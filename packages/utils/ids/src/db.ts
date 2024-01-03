@@ -24,7 +24,7 @@ export function dbIdFactory<NS extends string>(namespace: NS, idLength = 12) {
     generate: (): DbId<NS> => create(namespace, createDbId),
     isNamespace: (id: DbId, throwIfNotMatch = false) => isDbIdNamespace(id, namespace, throwIfNotMatch),
     validator,
-    isValid: (input: unknown): input is DbId<NS> => !!validator(input as any).issues?.length,
+    isValid: (input: unknown): input is DbId<NS> => !!validator._parse(input as any).issues?.length,
   };
 }
 
@@ -59,7 +59,7 @@ function split<NS extends string>(id: DbId<NS>): [NS, CUID2] {
 
   validateNamespace(namespace, true);
 
-  return [namespace as NS, cuid2String || ''];
+  return [namespace as NS, cuid2String ?? ''];
 }
 
 function validateNamespace(namespace?: string, throwIfNotValid = false): boolean {

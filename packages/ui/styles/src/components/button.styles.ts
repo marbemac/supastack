@@ -19,7 +19,9 @@ export const buttonStyle = tv(
         focusStyles,
       ),
 
-      icon: tx('[display:inherit]'),
+      startIcon: tx('[display:inherit]'),
+
+      endIcon: tx('text-[0.8em] [display:inherit]'),
 
       text: tx('overflow-hidden'),
     },

@@ -5,7 +5,7 @@ import { twMergeConfig, tx } from '../../tw.ts';
 const baseContent = tx(
   'flex flex-col overflow-hidden',
   'rounded-lg p-1.5 text-base',
-  'bg-neutral-surface shadow',
+  'bg-neutral-surface shadow ring-1 ring-neutral-soft-1-a',
   'animate-popper',
   'max-h-[var(--radix-dropdown-menu-content-available-height)]',
   'origin-[var(--radix-dropdown-menu-content-transform-origin)]',

@@ -38,7 +38,7 @@ const $generateTheme = (baseThemeId: PrebuiltThemeIds, customTheme: CustomTheme 
   const fgColor = readableColor(theme.colors.background, { preferred: theme.colors.text, fallback: '#FFF' });
   const fgLuminance = getLuminance(fgColor);
   const bgLuminance = getLuminance(theme.colors.background);
-  const isDark = theme.isDark || fgLuminance > bgLuminance;
+  const isDark = theme.isDark ?? fgLuminance > bgLuminance;
 
   const vars = computeCssVariables(theme, fgColor, isDark);
 
@@ -198,7 +198,7 @@ const computeCanvasColors = ({
     inset: rgbaFromArgb(tones.tone(isDark ? baseTone - 5 : baseTone - 6)),
     default: rgbaFromArgb(tones.tone(baseTone)),
     overlay: isDark
-      ? parseToRgba(transparentize(hexFromArgb(guard(0, 20, tones.tone(tone / 5) - 10)), 0.3))
+      ? parseToRgba(transparentize(hexFromArgb(guard(0, 20, tones.tone(tone / 5) - 10)), 0.5))
       : getAlphaColor(rgbaFromArgb(tones.tone(30)), bgColor),
     emphasis: rgbaFromArgb(tones.tone(isDark ? 85 : 20)),
   };

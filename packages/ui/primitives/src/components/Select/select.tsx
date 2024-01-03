@@ -55,7 +55,9 @@ SelectRoot.displayName = SelectPrimitive.Root.displayName;
 
 type SelectTriggerElement = React.ElementRef<typeof SelectPrimitive.Trigger>;
 type SelectTriggerProps = Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>, 'asChild'> &
-  Pick<ButtonProps, 'variant' | 'intent'>;
+  Pick<ButtonProps, 'variant' | 'intent'> & {
+    placeholder?: React.ReactNode;
+  };
 const SelectTrigger = forwardRef<SelectTriggerElement, SelectTriggerProps>((props, forwardedRef) => {
   const { placeholder, variant, intent, ...triggerProps } = props;
 

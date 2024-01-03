@@ -18,15 +18,15 @@ export const dialogStyle = tv(
       trigger: '',
 
       overlay: tx(
-        'fixed inset-0 z-40',
-        'after:absolute after:inset-0 after:bg-overlay after:saturate-50',
+        'fixed inset-0',
+        'before:absolute before:inset-0 before:bg-overlay before:saturate-50',
         'animate-overlay',
       ),
 
       content: tx(
-        'fixed left-[50%] top-[50%] z-5 max-h-[85vh] max-w-2xl overflow-auto',
+        'fixed left-[50%] top-[50%] max-h-[85vh] max-w-2xl overflow-auto',
         'translate-x-[-50%] translate-y-[-50%]',
-        'bg-panel shadow-lg outline-none',
+        'bg-panel shadow-lg outline-none ring-1 ring-neutral-soft-1-a',
         'animate-content',
         'rounded-xl p-6', // size
       ),

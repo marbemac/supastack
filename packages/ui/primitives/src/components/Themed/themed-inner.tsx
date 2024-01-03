@@ -5,6 +5,7 @@ import { cssObjToString, type GeneratedTheme } from '@supastack/ui-theme';
 
 import type { PolymorphicComponent } from '../../utils/forward-ref.ts';
 import { Box, type BoxProps } from '../Box/index.ts';
+import { Style } from './style.tsx';
 import { ThemeContext } from './theme-context.ts';
 
 type ThemedInnerProps = BoxProps & {
@@ -29,11 +30,11 @@ export const ThemedInner: PolymorphicComponent<'div', ThemedInnerProps> = ({
       <Box UNSAFE_class={cx(themeClassName, UNSAFE_class)} {...others}>
         {children}
 
-        <style jsx>
+        <Style>
           {`
             ${styles}
           `}
-        </style>
+        </Style>
       </Box>
     </ThemeContext.Provider>
   );

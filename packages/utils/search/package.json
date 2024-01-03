@@ -22,6 +22,6 @@
     "@types/moo": "^0.5.9",
     "@types/nearley": "^2.11.5",
     "vite-plugin-solid": "^2.8.0",
-    "vitest": "~1.1.0"
+    "vitest": "~1.1.1"
   }
 }
