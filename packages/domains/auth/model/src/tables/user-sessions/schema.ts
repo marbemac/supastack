@@ -30,10 +30,10 @@ export type BaseUserSession = typeof baseUserSessions.$inferSelect;
 export type BaseUserSessionColNames = NonNullable<keyof BaseUserSession>;
 
 /** The table we are defining + any other tables in the DB this table must be aware of (for queries, etc) */
-export interface UserSessionsDb<
+export type UserSessionsDb<
   T extends BaseUserSessionsTableCols = BaseUserSessionsTableCols,
   U extends BaseUsersTableCols = BaseUsersTableCols,
-> {
+> = {
   [USER_SESSIONS_KEY]: T;
   [USERS_KEY]: U;
-}
+};

@@ -27,10 +27,10 @@ export type BaseUserKey = typeof baseUserKeys.$inferSelect;
 export type BaseUserKeyColNames = NonNullable<keyof BaseUserKey>;
 
 /** The table we are defining + any other tables in the DB this table must be aware of (for queries, etc) */
-export interface UserKeysDb<
+export type UserKeysDb<
   T extends BaseUserKeysTableCols = BaseUserKeysTableCols,
   U extends BaseUsersTableCols = BaseUsersTableCols,
-> {
+> = {
   [USER_KEYS_KEY]: T;
   [USERS_KEY]: U;
-}
+};

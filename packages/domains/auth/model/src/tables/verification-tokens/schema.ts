@@ -36,10 +36,10 @@ export type BaseVerificationToken = typeof baseVerificationTokens.$inferSelect;
 export type BaseVerificationTokenColNames = NonNullable<keyof BaseVerificationToken>;
 
 /** The table we are defining + any other tables in the DB this table must be aware of (for queries, etc) */
-export interface VerificationTokensDb<
+export type VerificationTokensDb<
   T extends BaseVerificationTokensTableCols = BaseVerificationTokensTableCols,
   U extends BaseUsersTableCols = BaseUsersTableCols,
-> {
+> = {
   [VERIFICATION_TOKENS_KEY]: T;
   [USERS_KEY]: U;
-}
+};
